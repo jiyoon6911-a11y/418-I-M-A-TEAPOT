@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;1,300&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;700&family=Nanum+Pen+Script&family=Gaegu:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-serif: "Playfair Display", serif;
+  --font-hand: "Gaegu", "Nanum Pen Script", "Caveat", "Inter", "Pretendard", "Noto Sans KR", sans-serif;
+  --font-gaegu: "Gaegu", sans-serif;
+
+  --color-electric: #1D32FF;
+  --color-royal: #101B7A;
+  --color-soft-white: #F5F5F5;
+  --color-faded-gray: #CFCFCF;
+  --color-glitch-p: #9D00FF;
+}
+
+/* Vibrant Palette Core Interactive & Render Utilities */
+/* Poetic System Custom Pixel Cursor Override */
+* {
+  cursor: none !important;
+}
+
+/* CRT Screen Vignette Glass Glow */
+.screen-glow {
+  pointer-events: none;
+  box-shadow: inset 0 0 100px rgba(29, 50, 255, 0.35);
+}
+
+/* Poetic System Matrix Grid Backdrop */
+.grid-overlay {
+  background-image: radial-gradient(#1D32FF 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
+/* Vibrant Purple-Electric Shadowing */
+.vibrant-glitch-shadow {
+  text-shadow: 4px 4px 0px #9D00FF;
+}
+
+.box-solid-shadow {
+  box-shadow: 10px 10px 0px #1D32FF;
+}
+
+@layer utilities {
+  /* CRT glass screen flicker */
+  .crt-flicker {
+    animation: crtFlicker 0.15s infinite;
+  }
+  
+  /* Scanline effect rendering */
+  .scanline::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+    z-index: 20;
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+  }
+
+  /* Analog paper texture overlay */
+  .paper-grain {
+    background-color: #F5F5F5;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 0), radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 0);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+  }
+
+  /* Glitch animations */
+  .glitch-text {
+    position: relative;
+  }
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.985; }
+  50% { opacity: 0.995; }
+  100% { opacity: 0.985; }
+}
+
+@keyframes scanline-scroll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Custom handwriting utility variables */
+.handwritten {
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #101B7A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1D32FF;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F5F5F5;
+}
+

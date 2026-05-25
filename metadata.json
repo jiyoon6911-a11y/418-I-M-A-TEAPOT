@@ -1,0 +1,8 @@
+{
+  "name": "Remix: 418 I\u0027M A TEAPOT",
+  "description": "An immersive digital humanities exhibition archive: a poetic digital system exploring human error, emotional glitches, and imperfect warmth inside cold optimized machines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
