@@ -157,7 +157,7 @@ export default function Home({ humanTouchMode, onNavigate, onToggleHumanTouch = 
         >
           {/* Poetic subtitling */}
           <span className="block font-mono text-xs md:text-sm tracking-[0.2em] text-faded-gray uppercase mb-1 md:mb-2 text-center">
-            {humanTouchMode ? "✿ DIGITAL HUMANITIES EXPERIENCE ARCHIVE • 그래도 사람이 만들었어요" : "◈ DIGITAL HUMANITIES EXPERIMENTAL ARCHIVE"}
+            {humanTouchMode ? "✿ DIGITAL ARTS AND HUMANITIES ARCHIVE • 그래도 사람이 만들었어요" : "◈ DIGITAL ARTS AND HUMANITIES ARCHIVE"}
           </span>
 
           <h1 className="font-sans font-bold text-5xl md:text-9xl tracking-tighter text-soft-white leading-none inline-flex flex-col items-center select-none">

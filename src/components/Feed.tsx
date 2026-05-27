@@ -250,8 +250,9 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             EXHIBITION LOG BOARD
           </span>
           
-          <h1 className="font-sans font-black text-3xl md:text-6xl text-soft-white tracking-tighter leading-none mb-4 uppercase">
-            418 I&apos;m a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-[#10B981]">teapot</span>
+          <h1 className="font-sans font-black text-3xl md:text-6xl text-soft-white tracking-tighter leading-none mb-4 uppercase flex flex-col md:flex-row md:items-baseline">
+            <span>③ FEED</span>
+            <span className="text-lg md:text-3xl text-faded-gray/70 font-medium tracking-normal md:ml-4 mt-1 md:mt-0">_Instagram</span>
           </h1>
           
           <p className="font-sans text-sm md:text-md text-faded-gray leading-relaxed max-w-2xl text-justify mb-6 font-semibold">

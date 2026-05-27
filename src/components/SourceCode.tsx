@@ -21,8 +21,9 @@ export default function SourceCode({ humanTouchMode }: { humanTouchMode: boolean
         <span className="font-mono text-[9px] text-electric tracking-widest block mb-1 uppercase">
           // SYS.DOCUMENTATION // SPEC_418 // SOURCE CODE
         </span>
-        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase">
-          ② SOURCE CODE: <span className="text-electric vibrant-glitch-shadow h1-shadow">기획 및 의도</span>
+        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase flex flex-col md:flex-row md:items-baseline">
+          <span>① SOURCE CODE</span>
+          <span className="text-lg md:text-3xl text-faded-gray/70 font-medium tracking-normal lowercase md:ml-4 mt-1 md:mt-0">_기획 및 의도</span>
         </h2>
         <p className="font-mono text-xs text-faded-gray/70 mt-3 max-w-xl">
           차가운 디지털 시스템의 틈새에서 발견되는 인간다움을 탐구하는 디인예 기말 전시회의 기획 의도 및 핵심 가치를 기록합니다.

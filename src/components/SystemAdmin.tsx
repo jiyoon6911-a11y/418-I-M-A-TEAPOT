@@ -131,6 +131,19 @@ export default function SystemAdmin({ humanTouchMode }: { humanTouchMode: boolea
   return (
     <div className="relative w-full min-h-screen py-12 px-4 md:px-8 max-w-6xl mx-auto z-10 text-left">
       
+      {/* SECTION TOP HEADER */}
+      <div className="border-b border-electric/30 pb-6 mb-12 select-none">
+        <span className="font-mono text-[9px] text-electric tracking-widest block mb-1 uppercase">
+          // UTILITY_CONSOLE // ROOT_ADMINISTRATOR // SYSTEM CONTROL
+        </span>
+        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase flex flex-col md:flex-row md:items-baseline">
+          <span>⑤ System Admin</span>
+        </h2>
+        <p className="font-mono text-xs text-faded-gray/70 mt-2 max-w-xl">
+          디지털인문예술 동아리 CON:NECT 및 시스템 분석 도구를 관리 제어하는 어드민 콘솔 패널입니다.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* LEFT COLUMN: ACTIVE DATA TABLES RECORDRAL - Span 7 */}

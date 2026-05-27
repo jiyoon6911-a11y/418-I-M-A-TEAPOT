@@ -29,6 +29,7 @@ export interface ExhibitionArtifact {
   asciiArt: string;
   details: string[];
   imageUrl?: string;
+  imageUrlBack?: string;
 }
 
 export interface FeedPost {

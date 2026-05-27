@@ -148,7 +148,7 @@ const INVITATION_QUOTES = [
     sender: "홍지윤",
     role: "Technical Designer // Developer",
     avatar: "💻",
-    getMessage: (n: string) => `"지윤: ${n}님, 드디어 커넥트 게이트에 무사히 통과하셨군요! 에러 418의 귀여운 균열을 자유롭게 드래그해서 여기저기 스티킹해 보세요!"`
+    getMessage: (n: string) => `"지윤: ${n}님, 드디어 커넥트 게이트에 무사히 통과하셨군요! 웹페이지 구석구석에 숨겨진 다양한 인터랙티브 요소들을 자유롭게 체험해 보세요!"`
   },
   {
     sender: "김주연",
@@ -178,8 +178,6 @@ const INVITATION_QUOTES = [
 
 export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
   const constraintsRef = useRef<HTMLDivElement>(null);
-  const [stickers, setStickers] = useState<{ id: string; type: string; x: number; y: number; rotate: number }[]>([]);
-  const [showStickerTray, setShowStickerTray] = useState(true);
 
   // Guestbook states
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
@@ -220,28 +218,6 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
       osc.start();
       osc.stop(ctx.currentTime + duration);
     } catch (_) {}
-  };
-
-  const handleDragEnd = (id: string, event: any) => {
-    playLocalBeep(400, 'sine', 0.05);
-    const container = constraintsRef.current;
-    if (!container) return;
-    
-    const el = document.getElementById(`sticker-${id}`);
-    if (!el) return;
-    
-    const rect = el.getBoundingClientRect();
-    const parentRect = container.getBoundingClientRect();
-    
-    const leftPercent = ((rect.left - parentRect.left) / parentRect.width) * 100;
-    const topPercent = ((rect.top - parentRect.top) / parentRect.height) * 100;
-    
-    // Bounds checking inside container
-    setStickers(prev => prev.map(s => s.id === id ? { 
-      ...s, 
-      x: Math.min(Math.max(leftPercent, 0), 92), 
-      y: Math.min(Math.max(topPercent, 0), 98) 
-    } : s));
   };
 
   // Video cycle interval hook
@@ -445,8 +421,9 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
         <span className="font-mono text-[9px] text-electric tracking-widest block mb-1 uppercase">
           // INTERACTIVE_INSTALLATIONS // ON-SITE PROGRAMS
         </span>
-        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase">
-          현장 참여 프로그램 <span className="text-electric vibrant-glitch-shadow h1-shadow">EXPERIENCE</span>
+        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase flex flex-col md:flex-row md:items-baseline">
+          <span>④ Run</span>
+          <span className="text-lg md:text-3xl text-faded-gray/70 font-medium tracking-normal lowercase md:ml-4 mt-1 md:mt-0">_전시현장</span>
         </h2>
         <p className="font-mono text-xs text-faded-gray/70 mt-2 max-w-xl">
           캠퍼스라이프센터(CLC) 전시장 현장에서 직접 느끼고 조작해 볼 수 있는 체험 아카이브입니다. 디지털 인터랙션을 미리 실행해 보세요.
@@ -918,127 +895,6 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
 
         </div>
 
-      </div>
-
-      {/* Draggable Stickers Overlay Layer */}
-      <div className="absolute inset-0 pointer-events-none z-35 overflow-visible select-none">
-        {stickers.map((st) => {
-          const tmpl = stickerTemplates.find(t => t.type === st.type) || stickerTemplates[0];
-          return (
-            <motion.div
-              key={st.id}
-              id={`sticker-${st.id}`}
-              drag
-              dragConstraints={constraintsRef}
-              dragElastic={0.05}
-              dragMomentum={false}
-              style={{
-                top: `${st.y}%`,
-                left: `${st.x}%`,
-                rotate: `${st.rotate}deg`,
-              }}
-              whileDrag={{ scale: 1.15, zIndex: 60 }}
-              onDragStart={() => playLocalBeep(440, 'triangle', 0.05)}
-              onDragEnd={(e) => handleDragEnd(st.id, e)}
-              className={`absolute pointer-events-auto p-2 border border-solid box-solid-shadow font-mono text-[8.5px] font-extrabold cursor-grab active:cursor-grabbing text-center flex items-center gap-1 select-none ${tmpl.color} bg-[#020516]/95`}
-            >
-              <span>{tmpl.label}</span>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  playLocalBeep(330, 'sine', 0.1);
-                  setStickers(prev => prev.filter(item => item.id !== st.id));
-                }}
-                className="w-3.5 h-3.5 bg-black/40 hover:bg-rose-500 rounded-none flex items-center justify-center text-[8px] border border-white/10 cursor-pointer ml-1 text-white font-bold"
-              >
-                x
-              </button>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Floating Sticker Decor Pack Panel */}
-      <div className="fixed right-4 bottom-4 md:bottom-10 z-50 flex flex-col items-end gap-2 shrink-0 select-none">
-        <AnimatePresence>
-          {showStickerTray && (
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, x: 20 }}
-              animate={{ scale: 1, opacity: 1, x: 0 }}
-              exit={{ scale: 0.9, opacity: 0, x: 20 }}
-              className="bg-[#020516]/95 border-2 border-electric p-4 w-48 box-solid-shadow text-left font-sans select-none"
-            >
-              <div className="flex justify-between items-center border-b border-electric/30 pb-2 mb-2">
-                <span className="font-mono text-[9px] font-bold tracking-widest text-electric">🎨 DECO_STICKER_PACK</span>
-                <button 
-                  onClick={() => setShowStickerTray(false)}
-                  className="text-faded-gray/50 hover:text-white transition-colors cursor-pointer"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <p className="text-[8.5px] text-faded-gray/70 leading-normal mb-3 font-sans">
-                스티커를 클릭하여 화면에 배치하세요! 원하는 대로 드래그하거나 회전해 꾸밀 수 있습니다. (정상 스티킹 작동 완료)
-              </p>
-              
-              <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-1">
-                {stickerTemplates.map((st) => (
-                  <button
-                    key={st.type}
-                    onClick={() => {
-                      playLocalBeep(660, 'sine', 0.1);
-                      const id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
-                      
-                      const container = constraintsRef.current;
-                      let scrollYOffset = 0;
-                      if (container) {
-                        scrollYOffset = Math.min((window.scrollY / container.clientHeight) * 100 + 15, 80);
-                      }
-                      
-                      setStickers(prev => [
-                        ...prev, 
-                        { 
-                          id, 
-                          type: st.type, 
-                          x: 10 + Math.random() * 50, 
-                          y: Math.max(10, scrollYOffset + Math.random() * 15), 
-                          rotate: Math.floor(Math.random() * 34) - 17 
-                        }
-                      ]);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 border border-dashed rounded-none font-mono text-[9px] font-black transition-all hover:bg-white hover:text-black cursor-pointer ${st.color}`}
-                  >
-                    + {st.label}
-                  </button>
-                ))}
-              </div>
-
-              {stickers.length > 0 && (
-                <button
-                  onClick={() => {
-                    playLocalBeep(220, 'sine', 0.2);
-                    setStickers([]);
-                  }}
-                  className="w-full mt-3 py-1 bg-rose-500/10 hover:bg-[#FF3366] text-rose-300 hover:text-white border border-rose-500/30 text-[9px] font-mono font-bold transition-all cursor-pointer text-center"
-                >
-                  지우기 (스티커 {stickers.length}개)
-                </button>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        
-        {/* Toggle Button */}
-        <button
-          onClick={() => {
-            playLocalBeep(550, 'sine', 0.1);
-            setShowStickerTray(!showStickerTray);
-          }}
-          className="bg-electric hover:bg-[#FF3366] text-white p-2.5 border-2 border-white box-solid-shadow flex items-center gap-1.5 cursor-pointer font-mono text-[9px] font-bold uppercase transition-all select-none"
-        >
-          <Smile className="w-4 h-4 animate-bounce" />
-          <span>{showStickerTray ? "Hide Sticker Pack" : "데코 스티커 꾸미기"}</span>
-        </button>
       </div>
 
     </div>
