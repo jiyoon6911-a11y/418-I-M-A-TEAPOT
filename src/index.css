@@ -8,11 +8,11 @@
   --font-hand: "Gaegu", "Nanum Pen Script", "Caveat", "Inter", "Pretendard", "Noto Sans KR", sans-serif;
   --font-gaegu: "Gaegu", sans-serif;
 
-  --color-electric: #1D32FF;
+  --color-electric: #10B981;
   --color-royal: #101B7A;
   --color-soft-white: #F5F5F5;
   --color-faded-gray: #CFCFCF;
-  --color-glitch-p: #9D00FF;
+  --color-glitch-p: #0052FF;
 }
 
 /* Vibrant Palette Core Interactive & Render Utilities */
@@ -24,22 +24,22 @@
 /* CRT Screen Vignette Glass Glow */
 .screen-glow {
   pointer-events: none;
-  box-shadow: inset 0 0 100px rgba(29, 50, 255, 0.35);
+  box-shadow: inset 0 0 100px rgba(16, 185, 129, 0.25);
 }
 
 /* Poetic System Matrix Grid Backdrop */
 .grid-overlay {
-  background-image: radial-gradient(#1D32FF 0.5px, transparent 0.5px);
+  background-image: radial-gradient(#10B981 0.5px, transparent 0.5px);
   background-size: 24px 24px;
 }
 
 /* Vibrant Purple-Electric Shadowing */
 .vibrant-glitch-shadow {
-  text-shadow: 4px 4px 0px #9D00FF;
+  text-shadow: 4px 4px 0px #101B7A;
 }
 
 .box-solid-shadow {
-  box-shadow: 10px 10px 0px #1D32FF;
+  box-shadow: 10px 10px 0px #10B981;
 }
 
 @layer utilities {

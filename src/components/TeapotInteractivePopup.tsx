@@ -302,7 +302,7 @@ export default function TeapotInteractivePopup({ humanTouchMode, onToggleHumanTo
             </span>
           </div>
           <div className={`p-2 border text-left flex flex-col justify-between ${
-            humanTouchMode ? 'border-amber-800/30 bg-[#16120F]' : 'border-[#1D32FF]/20 bg-[#05081E]'
+            humanTouchMode ? 'border-amber-800/30 bg-[#16120F]' : 'border-[#10B981]/20 bg-[#05081E]'
           }`}>
             <span className="text-[8px] opacity-60 font-mono block">심박 주파수 (HEARTRATE)</span>
             <span className={`font-sans text-sm font-bold block mt-0.5 ${humanTouchMode ? 'text-amber-200' : 'text-[#FF3366]'}`}>
@@ -310,7 +310,7 @@ export default function TeapotInteractivePopup({ humanTouchMode, onToggleHumanTo
             </span>
           </div>
           <div className={`p-2 border text-left flex flex-col justify-between ${
-            humanTouchMode ? 'border-amber-800/30 bg-[#16120F]' : 'border-[#1D32FF]/20 bg-[#05081E]'
+            humanTouchMode ? 'border-amber-800/30 bg-[#16120F]' : 'border-[#10B981]/20 bg-[#05081E]'
           }`}>
             <span className="text-[8px] opacity-60 font-mono block">가열 상태 (STATUS)</span>
             <span className={`font-mono text-[9px] font-bold block truncate mt-1 ${isPouringTea ? 'text-[#FF3366] animate-pulse' : 'text-electric'}`}>

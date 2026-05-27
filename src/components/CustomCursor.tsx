@@ -102,7 +102,12 @@ export default function CustomCursor() {
 
       // Class/Tag classification
       const tag = target.tagName.toLowerCase();
-      const classes = target.className || '';
+      const rawClassName = target.className;
+      const classes = typeof rawClassName === 'string' 
+        ? rawClassName 
+        : (rawClassName && typeof rawClassName === 'object' && 'baseVal' in rawClassName)
+          ? (rawClassName as any).baseVal || ''
+          : '';
       
       // Check for emotional logs or specific indicators
       if (classes.includes('ComingSoonCard') || target.closest('[onMouseEnter]')) {
@@ -135,16 +140,16 @@ export default function CustomCursor() {
     };
   }, []);
 
-  // Compute cursor color interpolating from electric blue to soft warmth cream
+  // Compute cursor color interpolating from vivid green to rich blue
   const getCursorColor = () => {
     if (isGlitched) return '#FF3366'; // Glitched pinkish-red
     
     // Lerp color components:
-    // Electric blue (#1D32FF) -> RGB(29, 50, 255)
-    // Warm cream soft gold (#FFE6A3) -> RGB(255, 230, 163)
-    const r = Math.round(29 + (255 - 29) * warmthLevel);
-    const g = Math.round(50 + (230 - 50) * warmthLevel);
-    const b = Math.round(255 + (163 - 255) * warmthLevel);
+    // Green (#10B981) -> RGB(16, 185, 129)
+    // Blue/Royal (#0052FF) -> RGB(0, 82, 255)
+    const r = Math.round(16 + (0 - 16) * warmthLevel);
+    const g = Math.round(185 + (82 - 185) * warmthLevel);
+    const b = Math.round(129 + (255 - 129) * warmthLevel);
     return `rgb(${r}, ${g}, ${b})`;
   };
 

@@ -214,7 +214,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
   ];
 
   return (
-    <div className="relative w-full min-h-screen py-10 px-4 md:px-6 max-w-7xl mx-auto z-10 selection:bg-[#1D32FF] selection:text-white overflow-x-hidden">
+    <div className="relative w-full min-h-screen py-10 px-4 md:px-6 max-w-7xl mx-auto z-10 selection:bg-[#10B981] selection:text-white overflow-x-hidden">
       {/* SCANLINE / CRT FILTER OVERLAY */}
       <div className="pointer-events-none absolute inset-0 z-40 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,3px_100%] opacity-40" />
 
@@ -227,7 +227,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
       </div>
 
       {/* HEADER PIPELINE MONITOR BAR */}
-      <div className="w-full bg-[#101b7a]/40 border-2 border-[#1D32FF] p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 box-solid-shadow select-none">
+      <div className="w-full bg-[#101b7a]/40 border-2 border-[#10B981] p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 box-solid-shadow select-none">
         <div className="flex items-center gap-3">
           <div className="w-3.5 h-3.5 bg-rose-500 rounded-none animate-ping" />
           <div className="font-mono text-xs text-soft-white tracking-widest text-[#4261FF]">
@@ -243,15 +243,15 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
 
       {/* EXHIBITION MAIN META BRAND PANEL */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-        <div className="lg:col-span-8 border-2 border-[#1D32FF] bg-[#0c1236]/90 p-6 md:p-8 relative overflow-hidden box-solid-shadow">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#1D32FF]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="lg:col-span-8 border-2 border-[#10B981] bg-[#0c1236]/90 p-6 md:p-8 relative overflow-hidden box-solid-shadow">
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
           
-          <span className="font-mono text-[10px] bg-[#1D32FF] text-white px-2.5 py-1 uppercase tracking-widest font-bold inline-block mb-3 select-none">
+          <span className="font-mono text-[10px] bg-[#10B981] text-white px-2.5 py-1 uppercase tracking-widest font-bold inline-block mb-3 select-none">
             EXHIBITION LOG BOARD
           </span>
           
           <h1 className="font-sans font-black text-3xl md:text-6xl text-soft-white tracking-tighter leading-none mb-4 uppercase">
-            418 I&apos;m a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-[#1D32FF]">teapot</span>
+            418 I&apos;m a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-[#10B981]">teapot</span>
           </h1>
           
           <p className="font-sans text-sm md:text-md text-faded-gray leading-relaxed max-w-2xl text-justify mb-6 font-semibold">
@@ -266,11 +266,11 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => triggerBeep(440, 'sine', 0.12)}
-              className="px-3.5 py-2 border-2 border-[#1D32FF] text-white hover:bg-[#1D32FF] transition-all duration-300 flex items-center gap-2 font-bold box-solid-shadow"
+              className="px-3.5 py-2 border-2 border-[#10B981] text-white hover:bg-[#10B981] transition-all duration-300 flex items-center gap-2 font-bold box-solid-shadow"
             >
               <Globe className="w-3.5 h-3.5" /> INSTAGRAM::@iam.ateapot ↗
             </a>
-            <div className="px-3.5 py-2 border-2 border-[#1D32FF]/40 bg-[#090e29]/70 text-[#4261FF] font-semibold flex items-center gap-2 select-none">
+            <div className="px-3.5 py-2 border-2 border-[#10B981]/40 bg-[#090e29]/70 text-[#4261FF] font-semibold flex items-center gap-2 select-none">
               <span>ACTIVE_RELEASES = 02</span>
               <span>•</span>
               <span>REACTIONS = {likesCount['post-teapot'] + likesCount['post-retro-desktop']}</span>
@@ -279,23 +279,23 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         </div>
 
         {/* COMPACT INTERACTIVE MONITOR MODULE */}
-        <div className="lg:col-span-4 border-2 border-[#1D32FF] bg-[#020516] p-5 flex flex-col justify-between box-solid-shadow relative">
-          <div className="absolute top-2 right-3 font-mono text-[8px] text-[#1D32FF]/60 select-none">
+        <div className="lg:col-span-4 border-2 border-[#10B981] bg-[#020516] p-5 flex flex-col justify-between box-solid-shadow relative">
+          <div className="absolute top-2 right-3 font-mono text-[8px] text-[#10B981]/60 select-none">
              DEBUG_MONITOR_SYS
           </div>
           <div className="mb-4">
-            <span className="font-mono text-[9px] text-[#1D32FF] block mb-2 font-bold">// REAL_TIME_STREAMING_LOGS</span>
-            <div className="font-mono text-[10px] text-emerald-400 bg-black/60 p-3 h-32 overflow-y-auto border border-[#1D32FF]/20 space-y-1.5 custom-scrollbar">
+            <span className="font-mono text-[9px] text-[#10B981] block mb-2 font-bold">// REAL_TIME_STREAMING_LOGS</span>
+            <div className="font-mono text-[10px] text-emerald-400 bg-black/60 p-3 h-32 overflow-y-auto border border-[#10B981]/20 space-y-1.5 custom-scrollbar">
               {terminalLogs.map((log, i) => (
                 <div key={i} className="leading-normal flex tracking-tight">
-                  <span className="text-[#1D32FF] mr-1.5 select-none">&gt;</span>
+                  <span className="text-[#10B981] mr-1.5 select-none">&gt;</span>
                   <span className="break-all">{log}</span>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className="border-t border-[#1D32FF]/20 pt-3 flex items-center justify-between text-[10px] font-mono">
+          <div className="border-t border-[#10B981]/20 pt-3 flex items-center justify-between text-[10px] font-mono">
             <span className="text-faded-gray/50">SYSTEM TEMPERATURE:</span>
             <span className="text-amber-400 font-bold animate-pulse">98.6°C (HUMAN_LIMIT)</span>
           </div>
@@ -308,11 +308,11 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         {/* ========================================== */}
         {/* 1. REAL POST: TEAPOT SCANNER (Post 1)       */}
         {/* ========================================== */}
-        <div className="lg:col-span-2 border-2 border-[#1D32FF] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
+        <div className="lg:col-span-2 border-2 border-[#10B981] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
           
           {/* Header metadata tag */}
-          <div className="p-3 bg-[#101b7a]/40 border-b border-[#1D32FF]/30 flex justify-between items-center select-none font-mono text-[10px]">
-            <span className="text-[#1D32FF] font-bold uppercase tracking-widest">// POST::001 // TEAPOT_SCANNER</span>
+          <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[10px]">
+            <span className="text-[#10B981] font-bold uppercase tracking-widest">// POST::001 // TEAPOT_SCANNER</span>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-emerald-400 text-[9px] font-bold">ARCHIVED_SUCCESSFULLY</span>
@@ -320,7 +320,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
           </div>
 
           {/* MAIN POST BODY - STATIC SCANNER DISPLAY */}
-          <div className="relative aspect-video md:aspect-[21/10] bg-black border-b border-[#1D32FF]/30 overflow-hidden flex items-center justify-center select-none p-3">
+          <div className="relative aspect-video md:aspect-[21/10] bg-black border-b border-[#10B981]/30 overflow-hidden flex items-center justify-center select-none p-3">
             <div className="absolute inset-0 bg-black pointer-events-none" />
 
             {/* Left "418" Text on Screen - clean sans styling */}
@@ -369,7 +369,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
               수정되지 않은 날것의 감정을 담아 CLC에서 피어납니다.
             </p>
 
-            <div className="flex items-center justify-between pt-4 border-t border-[#1D32FF]/10 select-none">
+            <div className="flex items-center justify-between pt-4 border-t border-[#10B981]/10 select-none">
               <div className="flex gap-4 font-mono text-[10px] text-faded-gray/50">
                 <span>DATE: 2026.05.22</span>
                 <span>CATEGORY: EXHIBITION_MAIN</span>
@@ -391,12 +391,12 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         {/* ========================================== */}
         {/* 2. EMOTIONAL TEXT LOG (Vertical block)      */}
         {/* ========================================== */}
-        <div className="border-2 border-[#1D32FF] bg-[#1a1c3e]/30 p-5 md:p-6 font-mono text-xs relative overflow-hidden box-solid-shadow select-text">
+        <div className="border-2 border-[#10B981] bg-[#1a1c3e]/30 p-5 md:p-6 font-mono text-xs relative overflow-hidden box-solid-shadow select-text">
           <div className="absolute -top-10 -left-10 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl pointer-events-none" />
           
-          <div className="flex justify-between items-center border-b border-[#1D32FF]/20 pb-2.5 mb-4 font-bold select-none text-[9.5px]">
+          <div className="flex justify-between items-center border-b border-[#10B981]/20 pb-2.5 mb-4 font-bold select-none text-[9.5px]">
             <span className="text-purple-400">[EMOTIONAL_TRACEBACK_011]</span>
-            <span className="text-[#1D32FF]">SYSTEM_CLOCK_UTC</span>
+            <span className="text-[#10B981]">SYSTEM_CLOCK_UTC</span>
           </div>
 
           <div className="text-justify leading-relaxed text-soft-white space-y-3 font-semibold font-sans mb-6">
@@ -421,11 +421,11 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         {/* ========================================== */}
         {/* 3. REAL POST: WINDOWS 95 RETRO SCHEDULER   */}
         {/* ========================================== */}
-        <div className="lg:col-span-2 border-2 border-[#1D32FF] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
+        <div className="lg:col-span-2 border-2 border-[#10B981] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
           
           {/* Header metadata tag */}
-          <div className="p-3 bg-[#101b7a]/40 border-b border-[#1D32FF]/30 flex justify-between items-center select-none font-mono text-[10px]">
-            <span className="text-[#1D32FF] font-bold uppercase tracking-widest">// POST::002 // RETRO_WIN95_SCHEDULE</span>
+          <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[10px]">
+            <span className="text-[#10B981] font-bold uppercase tracking-widest">// POST::002 // RETRO_WIN95_SCHEDULE</span>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-emerald-400 text-[9px] font-bold">SYSTEM_STRESSED_ONLINE</span>
@@ -433,7 +433,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
           </div>
 
           {/* MAIN POST BODY CAROUSEL SLIDES */}
-          <div className="relative aspect-video md:aspect-[21/10] bg-[#008080] border-b border-[#1D32FF]/30 overflow-hidden flex items-center justify-center select-none">
+          <div className="relative aspect-video md:aspect-[21/10] bg-[#008080] border-b border-[#10B981]/30 overflow-hidden flex items-center justify-center select-none">
             
             {/* Visual scanline/CRT effect strictly for this vintage slide */}
             <div className="absolute inset-0 z-20 pointer-events-none bg-radial-gradient from-transparent to-black/30 pointer-events-none" />
@@ -448,7 +448,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
                     'post-retro-desktop': (prev['post-retro-desktop'] - 1 + desktopSlides.length) % desktopSlides.length
                   }));
                 }}
-                className="w-7 h-7 bg-[#020516]/80 hover:bg-[#1D32FF] text-white border border-[#1D32FF]/40 rounded-none flex items-center justify-center transition-all cursor-pointer shadow-md"
+                className="w-7 h-7 bg-[#020516]/80 hover:bg-[#10B981] text-white border border-[#10B981]/40 rounded-none flex items-center justify-center transition-all cursor-pointer shadow-md"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -460,7 +460,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
                     'post-retro-desktop': (prev['post-retro-desktop'] + 1) % desktopSlides.length
                   }));
                 }}
-                className="w-7 h-7 bg-[#020516]/80 hover:bg-[#1D32FF] text-white border border-[#1D32FF]/40 rounded-none flex items-center justify-center transition-all cursor-pointer shadow-md"
+                className="w-7 h-7 bg-[#020516]/80 hover:bg-[#10B981] text-white border border-[#10B981]/40 rounded-none flex items-center justify-center transition-all cursor-pointer shadow-md"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -677,7 +677,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
               기획단 동아리 인문예술전공생들의 뜨거운 현진 스토리를 그대로 반영합니다.
             </p>
 
-            <div className="flex items-center justify-between pt-4 border-t border-[#1D32FF]/10 select-none">
+            <div className="flex items-center justify-between pt-4 border-t border-[#10B981]/10 select-none">
               <div className="flex gap-4 font-mono text-[10px] text-faded-gray/50">
                 <span>DATE: 2026.05.18</span>
                 <span>CATEGORY: TIMELINE_INFO</span>
@@ -826,13 +826,13 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         {/* ========================================== */}
         {/* 10. ENDING DETAIL: YOUR MEMORY COLD BE HERE */}
         {/* ========================================== */}
-        <div className="border-2 border-dashed border-[#1D32FF]/80 hover:border-[#1D32FF] bg-[#05081E]/95 p-5 md:p-6 text-center box-solid-shadow relative flex flex-col justify-between min-h-[350px]">
-          <div className="absolute top-2 left-2 text-[8px] font-mono text-[#1D32FF]/50 uppercase select-none">
+        <div className="border-2 border-dashed border-[#10B981]/80 hover:border-[#10B981] bg-[#05081E]/95 p-5 md:p-6 text-center box-solid-shadow relative flex flex-col justify-between min-h-[350px]">
+          <div className="absolute top-2 left-2 text-[8px] font-mono text-[#10B981]/50 uppercase select-none">
             // SLOT_0X418_EMPTY_REDUNDANCY
           </div>
           
           <div className="flex flex-col items-center justify-center my-auto py-4">
-            <div className="w-10 h-10 border border-[#1D32FF]/30 bg-[#1D32FF]/10 text-[#4261FF] rounded-none flex items-center justify-center mb-4 select-none animate-pulse">
+            <div className="w-10 h-10 border border-[#10B981]/30 bg-[#10B981]/10 text-[#4261FF] rounded-none flex items-center justify-center mb-4 select-none animate-pulse">
               <Sparkles className="w-5 h-5" />
             </div>
 
@@ -852,12 +852,12 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
                 onChange={(e) => setCommentInput(e.target.value)}
                 placeholder="지저분한 사적인 파편 적기 (Write memory...)"
                 maxLength={45}
-                className="w-full bg-black border border-[#1D32FF]/40 text-xs px-3 py-2 text-white font-sans focus:outline-none focus:border-[#1D32FF] rounded-none text-center"
+                className="w-full bg-black border border-[#10B981]/40 text-xs px-3 py-2 text-white font-sans focus:outline-none focus:border-[#10B981] rounded-none text-center"
               />
               <div className="grid grid-cols-2 gap-2">
                 <button 
                   type="submit" 
-                  className="py-2.5 bg-[#1D32FF] hover:bg-[#FF3366] text-white font-mono text-[9px] font-bold tracking-widest transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1.5"
+                  className="py-2.5 bg-[#10B981] hover:bg-[#FF3366] text-white font-mono text-[9px] font-bold tracking-widest transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1.5"
                 >
                   <Send className="w-2.5 h-2.5" /> 기억 업로드
                 </button>
@@ -878,7 +878,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             </form>
           </div>
 
-          <div className="border-t border-[#1D32FF]/10 pt-3 flex flex-col gap-1 text-[9px] font-mono text-faded-gray/40 select-none">
+          <div className="border-t border-[#10B981]/10 pt-3 flex flex-col gap-1 text-[9px] font-mono text-faded-gray/40 select-none">
             <span>READY_FOR_HUMAN::SLOTS_OPEN_SANS</span>
             <span>Awaiting manual override...</span>
           </div>
@@ -888,9 +888,9 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
 
       {/* RECENTLY UPLOADED USER MEMORIES LOGS TRACKBOARD */}
       {userMemories.length > 0 && (
-        <div className="mt-12 border-2 border-[#1D32FF] bg-[#020516]/80 p-5 md:p-6 box-solid-shadow text-left">
+        <div className="mt-12 border-2 border-[#10B981] bg-[#020516]/80 p-5 md:p-6 box-solid-shadow text-left">
           <span className="font-mono text-[9px] text-emerald-400 font-bold block mb-3 uppercase tracking-wider">// LATEST USER MEMORIES SUBMISSIONS</span>
-          <div className="divide-y divide-[#1D32FF]/10 max-h-48 overflow-y-auto custom-scrollbar pr-2 space-y-3">
+          <div className="divide-y divide-[#10B981]/10 max-h-48 overflow-y-auto custom-scrollbar pr-2 space-y-3">
             {userMemories.map((mem, idx) => (
               <div key={idx} className="pt-31 first:pt-0 font-sans text-xs leading-relaxed flex items-center justify-between gap-2 select-text">
                 <div className="flex flex-col">
@@ -899,7 +899,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
                 </div>
                 <button
                   onClick={() => handlePrintReceipt(mem.text)}
-                  className="px-2.5 py-1 bg-[#101b7a]/40 border border-[#1D32FF]/50 text-[#4261FF] hover:bg-[#1D32FF] hover:text-white font-mono text-[8.5px] font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                  className="px-2.5 py-1 bg-[#101b7a]/40 border border-[#10B981]/50 text-[#4261FF] hover:bg-[#10B981] hover:text-white font-mono text-[8.5px] font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
                 >
                   <Printer className="w-3 h-3" /> 영수증 즉시 인쇄
                 </button>
@@ -950,7 +950,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
                   ))}
                 </div>
                 <div className="w-full bg-neutral-300 border border-neutral-400 h-3 flex overflow-hidden">
-                  <div className="bg-[#1D32FF] h-full" style={{ width: `${printProgress}%` }} />
+                  <div className="bg-[#10B981] h-full" style={{ width: `${printProgress}%` }} />
                 </div>
                 <span className="text-[8px] text-zinc-500 mt-1 select-none font-bold uppercase">{printProgress}% COMPLETED / THERMAL PRINT SYNC</span>
               </motion.div>
@@ -1133,14 +1133,14 @@ function ComingSoonCard({ title, subtitle, statusText, estimatedRelease, leakTex
     <div 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`border-2 border-dashed border-[#1D32FF]/30 bg-royal/5 p-5 md:p-6 relative overflow-hidden box-solid-shadow min-h-[310px] flex flex-col justify-between transition-colors duration-300 select-none ${
-        isLeaking ? 'bg-[#FF3366]/5 border-[#FF3366]/60' : 'hover:border-[#1D32FF]/60 hover:bg-royal/10'
+      className={`border-2 border-dashed border-[#10B981]/30 bg-royal/5 p-5 md:p-6 relative overflow-hidden box-solid-shadow min-h-[310px] flex flex-col justify-between transition-colors duration-300 select-none ${
+        isLeaking ? 'bg-[#FF3366]/5 border-[#FF3366]/60' : 'hover:border-[#10B981]/60 hover:bg-royal/10'
       }`}
     >
       {/* Top Header Metadata */}
       <div className="flex justify-between items-center text-[9px] font-mono select-none">
-        <span className="text-[#1D32FF] font-bold uppercase tracking-wider">// COMING_SOON_LOCK</span>
-        <span className="text-amber-400 font-bold bg-[#1d32ff]/10 px-1.5 py-0.5 border border-[#1d32ff]/20">{estimatedRelease}</span>
+        <span className="text-[#10B981] font-bold uppercase tracking-wider">// COMING_SOON_LOCK</span>
+        <span className="text-amber-400 font-bold bg-[#10B981]/10 px-1.5 py-0.5 border border-[#10B981]/20">{estimatedRelease}</span>
       </div>
 
       {/* Main Content Area */}
@@ -1158,7 +1158,7 @@ function ComingSoonCard({ title, subtitle, statusText, estimatedRelease, leakTex
         </div>
 
         {/* Encrypted / Leaked stream block */}
-        <div className="relative border border-[#1D32FF]/20 bg-black/40 p-3 h-20 overflow-hidden flex items-center justify-center">
+        <div className="relative border border-[#10B981]/20 bg-black/40 p-3 h-20 overflow-hidden flex items-center justify-center">
           <AnimatePresence mode="wait">
             {isLeaking ? (
               <motion.div 
@@ -1202,7 +1202,7 @@ function ComingSoonCard({ title, subtitle, statusText, estimatedRelease, leakTex
       </div>
 
       {/* Bottom info section */}
-      <div className="border-t border-[#1D32FF]/10 pt-3.5 flex justify-between items-center text-[9px] font-mono text-faded-gray/40 select-none">
+      <div className="border-t border-[#10B981]/10 pt-3.5 flex justify-between items-center text-[9px] font-mono text-faded-gray/40 select-none">
         <span>SECURITY_KEY: 0x418_AES_256</span>
         <span>LEAK_DETECTED: {leakTriggeredOnce ? "TRUE" : "FALSE"}</span>
       </div>

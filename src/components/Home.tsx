@@ -176,8 +176,64 @@ export default function Home({ humanTouchMode, onNavigate, onToggleHumanTouch = 
         </motion.div>
       </div>
 
-      {/* HORIZONTAL LED MARQUEE STATUS BANNER */}
-      <LedSystemBar />
+      {/* EXHIBITION CORE PILLARS OVERVIEW */}
+      <div className="w-full max-w-4xl z-20 mt-8 mb-12">
+        <div className="border-2 rounded-none p-6 md:p-8 transition-all duration-500 box-solid-shadow text-left border-electric bg-royal/30 text-soft-white font-sans">
+          
+          <div className="border-b border-electric/25 pb-4 mb-6 flex justify-between items-center">
+            <div>
+              <h3 className="font-sans font-bold text-xl md:text-2xl tracking-tight uppercase text-white">
+                Connect to Touch
+              </h3>
+            </div>
+          </div>
+
+          {/* Clean Content Panel with exact text provided by user */}
+          <div className="relative">
+            <p className="text-sm leading-relaxed text-justify whitespace-pre-line text-faded-gray/90">
+              {`학기 말, 늘 그래왔듯 돌아오는 과제와 결과물들의 나열. 익숙함이라는 이름 아래 무색무취하게 흘러가던 디지털인문예술의 기말 전시가 올해, 조금 특별한 ‘터치’를 시작합니다.
+
+디지털인문예술과 디지털미디어콘텐츠의 교차점에서 사람과 문화를 잇는 문화콘텐츠 기획 동아리, 커넥트가 이번 기말 전시의 메가폰을 잡게 된 것은 어쩌면 아주 자연스러운 이끌림이었습니다.
+
+우리가 배우는 '디지털인문예술'은 단순히 스크린 속에 갇힌 차가운 데이터나 코딩 플로우가 아닙니다. 기술을 매개로 인간의 삶과 온기를 표현하고, 모니터 너머의 사람에게 가닿는 가장 현대적인 감각입니다. 하지만 그동안의 기말 전시는 각자의 결과물을 일방적으로 보여주는 스크린의 나열에 머물러 있었을지도 모릅니다.
+
+커넥트는 그 무색무취했던 공간에 ‘(Human Touch)’가 필요하다고 느꼈습니다.
+
+마우스 클릭 한 번, 스크린 위의 손짓 하나가 단순한 조작을 넘어 작품과 관객이 교감하는 ‘터치’가 되기를 바랐습니다.
+일방적인 감상을 넘어, 관객이 직접 참여하고 채워나가는 과정을 통해 서로에게 깊은 ‘터치’로 남기를 원했습니다.
+
+그래서 이번 전시는 단순히 작품을 진열하는 공간이 아닌, 관객의 참여로 비로소 완성되는 하나의 거대한 참여형 플랫폼으로 기획되었습니다. 전시 전체를 관통하는 명확한 스토리텔링 위에 관객 여러분의 손길과 발길이 닿을 때, 비로소 우리의 디지털인문예술은 생동감 있게 살아 움직이기 시작할 것입니다.
+
+차가운 디지털 기술 위에 커넥트만의 따뜻한 감각을 얹고, 여러분의 참여라는 마지막 퍼즐을 더해 가장 인간적인 축제를 만들고자 합니다.
+
+손끝으로 느끼고, 온기로 연결되는 곳. 커넥트가 제안하는 새로운 디지털인문예술의 장에 오신 것을 환영합니다.
+
+자, 이제 커넥트가 연결한 세계를 마음껏 ‘터치’해 주세요.`}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* QUICK LAUNCH ACCESS TILES */}
+      <div className="w-full max-w-4xl z-20 mt-6 md:mt-10">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+          {([
+            { id: 'source-code', label: '01 // SOURCE CODE' },
+            { id: 'component', label: '02 // COMPONENTS' },
+            { id: 'feed', label: '03 // FEED' },
+            { id: 'run', label: '04 // RUN' },
+            { id: 'admin', label: '05 // SYSTEM ADMIN' }
+          ] as const).map((item) => (
+            <button
+              key={item.id}
+              onClick={() => onNavigate(item.id)}
+              className="py-3 px-2 text-center cursor-pointer select-none bg-royal/40 hover:bg-electric text-[#CFCFCF] hover:text-[#0c1236]/90 hover:font-bold border border-electric/30 hover:border-electric transition-all duration-200 uppercase font-mono text-[10px] md:text-[11px] flex items-center justify-center tracking-wider h-14 rounded-sm hover:-translate-y-0.5 active:translate-y-0 shadow-md"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* POETIC RETRO POPUP SYSTEM: THE EMOTIONAL CORE "418 I'M A TEAPOT" CHIP */}
       <div className="w-full max-w-xl my-8 md:my-12 z-20 flex flex-col items-center justify-center">
@@ -185,183 +241,6 @@ export default function Home({ humanTouchMode, onNavigate, onToggleHumanTouch = 
           humanTouchMode={humanTouchMode} 
           onToggleHumanTouch={onToggleHumanTouch} 
         />
-      </div>
-
-      {/* EXHIBITION CORE PILLARS OVERVIEW */}
-      <div className="w-full max-w-4xl z-20 mt-8 mb-12">
-        <div className="border-2 rounded-none p-6 md:p-8 transition-all duration-500 box-solid-shadow text-left border-electric bg-royal/30 text-soft-white font-sans">
-          
-          <div className="border-b border-electric/25 pb-4 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <span className="font-mono text-[9px] uppercase tracking-widest block mb-1 text-electric">
-                // EXHIBITION CORE PILLARS // 전시 설계 핵심 자료
-              </span>
-              <h3 className="font-sans font-bold text-xl md:text-2xl tracking-tight uppercase text-white">
-                전시 기획, 주제 및 콘셉트 상세 규격
-              </h3>
-            </div>
-            
-            {/* Pill Control Tabs */}
-            <div className="flex flex-wrap gap-2 font-mono text-[10px]">
-              {(['intent', 'theme', 'concept'] as const).map((pillarId) => {
-                const labels = {
-                  intent: '01 // 기획 의도',
-                  theme: '02 // 전시 주제 (Human touch)',
-                  concept: "03 // 콘셉트 (418 I'm a teapot)"
-                };
-                const isActive = activePillar === pillarId;
-                return (
-                  <button
-                    key={pillarId}
-                    onClick={() => setActivePillar(pillarId)}
-                    className={`px-3 py-1.5 rounded-none border cursor-pointer select-none transition-all ${
-                      isActive 
-                        ? 'bg-electric border-soft-white text-soft-white font-bold'
-                        : 'border-electric/30 text-faded-gray/70 hover:border-electric'
-                    }`}
-                  >
-                    {labels[pillarId]}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Tab Content Panel with exact text provided by user */}
-          <div className="relative min-h-[220px]">
-            <AnimatePresence mode="wait">
-              {activePillar === 'intent' && (
-                <motion.div
-                  key="intent"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4"
-                >
-                  <span className="font-mono text-[9px] px-2 py-0.5 border rounded-full inline-block uppercase tracking-wider select-none border-electric text-electric bg-electric/5">
-                    PRIMARY INTENT // 기획 의도
-                  </span>
-                  <p className="text-sm leading-relaxed text-justify whitespace-pre-line text-faded-gray/90">
-                    기술이 일상의 많은 부분을 대신하면서 우리는 그 어느 때보다 효율을 중시하는 사회에서 살고 있다. AI가 정교한 결과물을 내놓고 많은 과정이 자동화되는 흐름은 효율적이지만 한편으로는 정해진 정답만 가득한 딱딱한 인상을 주기도 한다. 인간의 능력을 추월하고 완벽한 정답을 제시하는 시대가 도래함에 따라, 역설적으로 사회는 기술이 흉내 낼 수 없는 ‘인간의 흔적’에 주목하기 시작했다.
-                    {"\n\n"}
-                    모든 과정이 자동화되고 매끄럽게 흘러가는 디지털 환경 속에서 사람들은 정교한 알고리즘보다 투박하더라도 진정성이 느껴지는 정서적 연결에 더 큰 가치를 부여한다. 기술이 고도화될수록 그 이면에 숨겨진 창작자의 사유와 의도적인 빈틈이 인간다움을 증명하는 핵심 요소가 된 것이다.
-                    {"\n\n"}
-                    이번 전시는 이러한 사회적 흐름을 바탕으로, 디지털 시스템의 틈새에서 발견되는 인간다움을 탐구하고자 한다. 이는 곧 디지털 기술을 단순한 효율의 도구를 넘어, 인간 본성을 이해하는 새로운 렌즈로 삼고자 하는 &apos;디지털인문예술전공&apos;의 방향성과 맞닿아 있다. 우리는 기술과 시스템 속에 의도적인 빈틈을 부여하는 방식을 통해, 최신 기술 시대에 인문학이 어떻게 새로운 통찰을 발굴하고 그 깊이를 확장할 수 있는지 그 구체적인 가능성을 제시하고자 한다.
-                  </p>
-                </motion.div>
-              )}
-
-              {activePillar === 'theme' && (
-                <motion.div
-                  key="theme"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4"
-                >
-                  <span className="font-mono text-[9px] px-2 py-0.5 border rounded-full inline-block uppercase tracking-wider select-none border-electric text-electric bg-electric/5">
-                    EXHIBITION THEME // 전시 주제: 휴먼 터치 (Human touch)
-                  </span>
-                  <p className="text-sm leading-relaxed text-justify whitespace-pre-line text-faded-gray/90">
-                    이번 전시의 중심 주제는 ‘휴먼 터치(Human touch)’이다. 이는 차가운 디지털 매체 안에 어떻게 인간의 온기를 담아낼 수 있을지에 대한 깊은 고민에서 시작되었다.
-                    {"\n\n"}
-                    고도화된 기술로 기계적인 완벽함 및 매끄러운 결과값이 당연해진 시대지만, 사람들은 역설적으로 완벽하게 통제된 시스템 속에서 투박하더라도 진정성이 느껴지는 &apos;인간의 흔적&apos;을 갈망한다. 오차 없는 알고리즘이 정답을 제시할지라도, 우리의 마음을 진정으로 움직이는 것은 결국 사람의 감수성과 시선이 묻어나는 불완전한 순간들이다.
-                    {"\n\n"}
-                    본 전시는 기술이 인간을 소외시키는 차가운 도구로 전락하는 것을 경계하며, 오히려 인간의 내면을 연결하는 따뜻하고 유연한 매개체로 기능할 수 있는 가능성을 탐구한다. 거대한 시스템의 표면 아래에 존재하는 작가의 고민과 의도적인 빈틈을 보여줌함으로써, 매끄러운 자동화의 물결 속에서도 결코 지워지지 않는 고유한 인간다움을 증명하고자 한다.
-                  </p>
-                </motion.div>
-              )}
-
-              {activePillar === 'concept' && (
-                <motion.div
-                  key="concept"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4"
-                >
-                  <span className="font-mono text-[9px] px-2 py-0.5 border rounded-full inline-block uppercase tracking-wider select-none border-electric text-electric bg-electric/5">
-                    CORE CONCEPT // 전시 핵심 콘셉트 (418 I&apos;m a teapot)
-                  </span>
-                  <p className="text-sm leading-relaxed text-justify whitespace-pre-line text-faded-gray/90">
-                    전시의 핵심 콘셉트인 ‘418 I’m a teapot’은 1998년 만우절 농담에서 유래한 기술 표준으로, 커피를 내리라는 명령에 대해 서버가 &quot;나는 찻주전자이기에 커피를 내릴 수 없다&quot;고 응답하며 거절하는 상황을 뜻한다. 이는 시스템의 단순한 기능 정지가 아니라, 자신의 정체성과 맞지 않는 요청에 대해 명확하게 ‘나다움’을 밝히며 유쾌하게 응답을 거부하는 인간적인 위트를 상징한다.
-                    {"\n\n"}
-                    이번 전시에서는 이 개념을 효율 중심의 시스템 속에서 창작자의 자아를 드러내는 방식으로 풀어내고자 한다. 모두가 자동화된 툴을 이용해 정답을 내놓으려 할 때, 우리는 오히려 의도적인 오류와 엉뚱한 응답을 통해 기술 너머에 사람이 살고 있음을 보여준다. 이는 단순히 시스템의 오류를 재현하는 것을 넘어, 정해진 매뉴얼에서 벗어나 자신의 고유한 서사를 지켜내려는 능동적인 태도를 의미한다.
-                    {"\n\n"}
-                    결과적으로 이러한 의도적 오류는 기술을 단순한 효율성의 도구가 아닌, 개인의 정체성을 투영하는 ‘휴먼 터치(Human touch)’의 매개체로 작용할 것이다.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </div>
-
-      {/* QUICK LAUNCH ACCESS TILES */}
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 z-20 mt-6 md:mt-10">
-        
-        {/* Tile 1: Philosophy Manifest */}
-        <div 
-          onClick={() => onNavigate('source-code')}
-          className="border-2 border-electric bg-royal/40 p-4 rounded-none cursor-pointer hover:border-electric hover:bg-royal/60 box-solid-shadow transform hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
-        >
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-mono text-[9px] text-electric">[MANIFESTO]</span>
-            <Terminal className="w-4 h-4 text-electric" />
-          </div>
-          <div>
-            <h3 className="font-sans text-lg font-bold text-soft-white mb-1">01 // MANIFESTO</h3>
-            <p className="font-mono text-[10px] text-faded-gray/80 leading-relaxed">
-              Why a teapot? Exploring RFC 2324 as a digital resistance gesture.
-            </p>
-          </div>
-          <span className="font-mono text-[9px] text-electric/60 hover:text-soft-white transition-colors mt-4">
-            SYS.LOAD --PHILOSOPHY →
-          </span>
-        </div>
-
-        {/* Tile 2: Goods & Artifacts */}
-        <div 
-          onClick={() => onNavigate('component')}
-          className="border-2 border-electric bg-royal/40 p-4 rounded-none cursor-pointer hover:border-electric hover:bg-royal/60 box-solid-shadow transform hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
-        >
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-mono text-[9px] text-electric">[COMPONENTS]</span>
-            <Cpu className="w-4 h-4 text-electric" />
-          </div>
-          <div>
-            <h3 className="font-sans text-lg font-bold text-soft-white mb-1">02 // CATALOGUE</h3>
-            <p className="font-mono text-[10px] text-faded-gray/80 leading-relaxed">
-              Explore physical artifacts containing error-codes, leaflets, memos.
-            </p>
-          </div>
-          <span className="font-mono text-[9px] text-electric/60 hover:text-soft-white transition-colors mt-4">
-            SYS.QUERY --ART_INVENTORY →
-          </span>
-        </div>
-
-        {/* Tile 3: Interactive run */}
-        <div 
-          onClick={() => onNavigate('run')}
-          className="border-2 border-electric bg-royal/40 p-4 rounded-none cursor-pointer hover:border-electric hover:bg-royal/60 box-solid-shadow transform hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
-        >
-          <div className="flex justify-between items-center mb-4">
-            <span className="font-mono text-[9px] text-electric">[INTERACTIVE]</span>
-            <Coffee className="w-4 h-4 text-electric" />
-          </div>
-          <div>
-            <h3 className="font-sans text-lg font-bold text-soft-white mb-1">03 // PLAY ROOM</h3>
-            <p className="font-mono text-[10px] text-faded-gray/80 leading-relaxed">
-              Submit your error codes, simulate photobooth prints, engage system.
-            </p>
-          </div>
-          <span className="font-mono text-[9px] text-electric/60 hover:text-soft-white transition-colors mt-4">
-            SYS.RUN --PLAYGROUND →
-          </span>
-        </div>
       </div>
 
       {/* FOOTER POETRY STRIP */}

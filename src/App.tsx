@@ -138,7 +138,7 @@ export default function App() {
             className="fixed inset-0 bg-[#0B0F33] z-50 flex flex-col items-center justify-center p-6 text-emerald-400 font-mono text-xs text-left select-none scanline"
           >
             <div className="max-w-md w-full space-y-3 p-6 border border-emerald-500/30 bg-royal/40 rounded-md shadow-2xl relative overflow-hidden">
-              <div className="absolute top-2 right-3 font-mono text-[9px] text-[#1D32FF] animate-pulse">
+              <div className="absolute top-2 right-3 font-mono text-[9px] text-electric animate-pulse">
                 [SYS_REFLUX_LOADING]
               </div>
               
@@ -246,7 +246,7 @@ export default function App() {
               onClick={() => handleRouteNavigation('home')}
               className="flex items-center gap-2 cursor-pointer group"
             >
-              <div className="w-8 h-8 rounded-full border border-electric bg-[#1D32FF]/10 flex items-center justify-center transition-transform group-hover:rotate-12">
+              <div className="w-8 h-8 rounded-full border border-electric bg-electric/10 flex items-center justify-center transition-transform group-hover:rotate-12">
                 <Heart className="w-4 h-4 text-electric animate-pulse" />
               </div>
               <div className="flex flex-col text-left">
