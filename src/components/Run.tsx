@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GuestbookEntry } from '../types';
-import { Terminal, Send, Eye, ShieldAlert, Cpu, Nfc, Camera, Receipt, Sparkles, MapPin, Gift, GiftIcon, HelpCircle, Smile, X } from 'lucide-react';
+import { Terminal, Send, Eye, ShieldAlert, Cpu, Camera, Receipt, Sparkles, MapPin, Gift, GiftIcon, HelpCircle, Smile, X, Printer, Copy } from 'lucide-react';
 
 const stickerTemplates = [
   { type: 'teapot', label: '🫖 찻주전자', color: 'bg-emerald-500/10 text-emerald-300 border-emerald-400/40 text-emerald-400' },
@@ -187,10 +187,6 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
   const [humanOverrideToggle, setHumanOverrideToggle] = useState(true);
   const [typingFeedback, setTypingFeedback] = useState("");
 
-  // NFC simulator states
-  const [nfcState, setNfcState] = useState<'IDLE' | 'READING' | 'SUCCESS'>('IDLE');
-  const [nfcReceipt, setNfcReceipt] = useState<string | null>(null);
-
   // Invitation simulation states
   const [boothName, setBoothName] = useState("");
   const [selectedQuote, setSelectedQuote] = useState<{ sender: string; role: string; avatar: string; text: string } | null>(null);
@@ -201,6 +197,44 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [videoSpeed, setVideoSpeed] = useState(350); // ms
   const [steamLevel, setSteamLevel] = useState(101.4); // °C
+
+  // Memory and Thermal Printer States
+  const [activeReceipt, setActiveReceipt] = useState<{ text: string; date: string; density: string; id: string } | null>(null);
+  const [isPrinting, setIsPrinting] = useState(false);
+  const [printProgress, setPrintProgress] = useState(0);
+  const [commentInput, setCommentInput] = useState('');
+
+  const handlePrintReceipt = (text: string) => {
+    if (isPrinting) return;
+    
+    setIsPrinting(true);
+    setPrintProgress(0);
+    playLocalBeep(1000, 'sawtooth', 0.1);
+    
+    // Play sequential mechanical print raw synth sounds
+    const soundTimes = [100, 200, 350, 500, 650, 800, 950, 1100, 1250, 1400, 1550];
+    soundTimes.forEach((t, i) => {
+      setTimeout(() => {
+        playLocalBeep(i % 2 === 0 ? 1200 : 1650, 'sawtooth', 0.07);
+        setPrintProgress(Math.floor(((i + 1) / soundTimes.length) * 100));
+      }, t);
+    });
+
+    const newReceipt = {
+      id: `V-0x${Math.floor(100000 + Math.random() * 900000).toString(16).toUpperCase()}`,
+      text,
+      date: new Date().toLocaleDateString('ko-KR') + ' ' + new Date().toLocaleTimeString('ko-KR'),
+      density: `${(96.0 + Math.random() * 2.8).toFixed(1)}%`
+    };
+
+    setTimeout(() => {
+      setActiveReceipt(newReceipt);
+      setIsPrinting(false);
+      setPrintProgress(0);
+      playLocalBeep(880, 'sine', 0.1);
+      setTimeout(() => playLocalBeep(1320, 'sine', 0.15), 80);
+    }, 1750);
+  };
 
   const playLocalBeep = (freq: number, type: OscillatorType = 'sine', duration = 0.05) => {
     try {
@@ -366,29 +400,6 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
     setTimeout(() => setTypingFeedback(""), 4000);
   };
 
-  // Simulates tapping NFC device
-  const simulateNfcTap = () => {
-    setNfcState('READING');
-    setTimeout(() => {
-      setNfcState('SUCCESS');
-      const gridId = Math.floor(Math.random() * 9) + 1;
-      setNfcReceipt(`
-=========================================
-          418 I'M A TEAPOT
-     NFC CONTACTLESS TAG CERTIFICATE
-=========================================
-전시장 동선: 캠퍼스라이프센터 (CLC)
-접속노드: POSTER-TAG-NODE-#0${gridId}
-인증코드: ACTIVE-HUMAN-TOUCH
-출품구역: 0${gridId} 디지털디자인예술학과 전시관
-상태지표: POETIC LIFEFORM VERIFIED
-설명: "효율성 최적화 시스템의 균열을 
-내주셔서 감사합니다. 마음을 끓여보세요."
-=========================================
-      `);
-    }, 1500);
-  };
-
   // Summon a random invitation message from team members
   const summonTeammateMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -431,7 +442,7 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
       </div>
 
       {/* OFFLINE PHYSICAL EVENT INFOGRAPHICS CARD */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12 select-none">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 select-none">
         
         {/* Card 1: 나만의 오류 코드 [방명록] */}
         <div className="border-2 border-electric p-4 bg-royal/20 box-solid-shadow flex flex-col justify-between">
@@ -489,27 +500,13 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
           <span className="font-mono text-[9px] text-electric/60 mt-3 block uppercase tracking-wider">// INSTAGRAM_EVENT_TEA</span>
         </div>
 
-        {/* Card 5: NFC 태그 시스템 */}
-        <div className="border-2 border-electric p-4 bg-royal/20 box-solid-shadow flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 text-electric mb-2.5">
-              <Nfc className="w-4 h-4" />
-              <h4 className="font-sans font-bold text-xs text-soft-white">NFC 태그 시스템</h4>
-            </div>
-            <p className="font-sans text-[11px] text-faded-gray/90 leading-relaxed text-justify">
-              매번 QR 코드를 스캔해야 했던 번거로운 과정에서, 각 프로젝트 포스터에 부착된 NFC 스티커에 스마트폰을 가볍게 태그하는 것만으로, 별도의 검색 없이 팀별 프로젝트 사이트로 즉시 연결됩니다.
-            </p>
-          </div>
-          <span className="font-mono text-[9px] text-electric/60 mt-3 block uppercase tracking-wider">// NFC_AUTO_DIRECT_LINK</span>
-        </div>
-
       </div>
 
       {/* CORE EXPERIMENT LAYOUT GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* LEFT COLUMN: GUESTBOOK (LOG EXCEPTION WRITER) - Span 7 */}
-        <div className="lg:col-span-7 space-y-6">
+        {/* LEFT COLUMN: GUESTBOOK (LOG EXCEPTION WRITER) - Span 6 */}
+        <div className="lg:col-span-6 space-y-6">
           
           {/* RETRO ERROR POPUP WINDOW STYLE GUESTBOOK */}
           <div className="border-2 border-electric bg-[#050720] box-solid-shadow overflow-hidden">
@@ -602,57 +599,10 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
               </AnimatePresence>
             </div>
           </div>
-
-          {/* GUESTBOOK STREAM DATA DUMP */}
-          <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-            <h4 className="font-mono text-[10px] text-electric tracking-wide select-none uppercase font-bold">
-              // RECENT_SYSTEM_EXCEPTIONS // 방명록 라이브 로그 Stream
-            </h4>
-            {entries.length === 0 ? (
-              <div className="text-center py-8 font-mono text-xs text-faded-gray/50 border border-dashed border-electric/20">
-                기록된 예외 로그가 없습니다. 첫 대오차를 기록해 보세요.
-              </div>
-            ) : (
-              entries.map((entry) => (
-                <div 
-                  key={entry.id}
-                  className={`border-2 rounded-none p-5 bg-[#03061F] flex flex-col justify-between transition-all duration-300 box-solid-shadow ${
-                    entry.humanOverride || humanTouchMode
-                      ? 'border-[#1D32FF]/50 font-sans text-xs font-semibold md:text-[13px] text-soft-white space-y-1' 
-                      : 'border-electric/30 font-mono text-xs text-faded-gray'
-                  }`}
-                >
-                  <div className="flex justify-between border-b border-electric/10 pb-2 mb-2 select-none">
-                    <span className={`font-bold uppercase ${entry.humanOverride || humanTouchMode ? 'text-emerald-400' : 'text-electric'}`}>
-                      ERR_{entry.errorCode} // 수작업 피드백: {entry.name}
-                    </span>
-                    <span className="opacity-40 text-[9px] font-mono">{entry.timestamp}</span>
-                  </div>
-
-                  <p className="leading-relaxed mb-3 italic">
-                    &quot;{entry.message}&quot;
-                  </p>
-
-                  {entry.systemResponse && (
-                    <div className={`mt-2 p-3 border rounded-none text-xs leading-relaxed ${
-                      entry.humanOverride || humanTouchMode
-                        ? 'bg-[#0B0F33]/80 border-[#1D32FF]/20 text-faded-gray font-mono'
-                        : 'bg-[#050720] border-electric/15 text-emerald-400'
-                    }`}>
-                      <span className="font-bold flex items-center gap-1 font-mono uppercase text-[9.5px]">
-                        <Cpu className="w-3.5 h-3.5 inline" /> core response code:
-                      </span>
-                      {entry.systemResponse}
-                    </div>
-                  )}
-                </div>
-              ))
-            )}
-          </div>
         </div>
 
-        {/* RIGHT COLUMN: NFC SIGNIN & PHOTOSTAMP PRINT - Span 5 */}
-        <div className="lg:col-span-5 space-y-6">
+        {/* RIGHT COLUMN: TEAPOT MONITOR - Span 6 */}
+        <div className="lg:col-span-6 space-y-6">
           
           {/* TEAPOT ASCII CCTV LIVE MONITOR */}
           <div className="border-2 border-[#1D32FF] bg-[#020516] rounded-none p-5 relative text-left box-solid-shadow overflow-hidden">
@@ -764,63 +714,11 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* BOTTOM COLUMN: WIDENED CONNECTIONS INVITATION - Span 12 */}
+        <div className="lg:col-span-12 mt-4">
           
-          {/* NFC SIMULATION */}
-          <div className="border-2 border-electric rounded-none p-6 bg-royal/10 relative text-left box-solid-shadow">
-            <div className="absolute top-4 right-4 text-electric">
-              <Nfc className="w-5 h-5 animate-pulse" />
-            </div>
-
-            <h3 className="font-sans text-xl font-bold text-soft-white mb-2 uppercase">
-              NFC 태그 시스템
-            </h3>
-            <p className="font-sans text-xs text-faded-gray leading-relaxed mb-6 text-justify">
-              매번 QR 코드를 스캔해야 했던 번거로운 과정에서, 각 프로젝트 포스터에 부착된 NFC 스티커에 스마트폰을 가볍게 태그하는 것만으로, 별도의 검색 없이 팀별 프로젝트 사이트로 즉시 연결됩니다.
-            </p>
-
-            <div className="space-y-4">
-              <div className="flex justify-center py-2 select-none">
-                <button 
-                  onClick={simulateNfcTap}
-                  disabled={nfcState === 'READING'}
-                  className={`px-5 py-3.5 border-2 cursor-pointer select-none transition-all duration-300 flex items-center gap-2 font-mono text-[11px] rounded-none ${
-                    nfcState === 'SUCCESS' 
-                      ? 'bg-electric border-soft-white text-soft-white shadow-lg' 
-                      : 'bg-royal/40 border-electric text-electric hover:bg-royal/60'
-                  }`}
-                >
-                  <Nfc className="w-4 h-4 animate-ping" />
-                  {nfcState === 'IDLE' && "스마트폰 태그 시뮬레이션"}
-                  {nfcState === 'READING' && "기기 신호 패리티 세그먼트 읽는 중..."}
-                  {nfcState === 'SUCCESS' && "접속 노드 인증 통과 전송 성공"}
-                </button>
-              </div>
-
-              {nfcReceipt && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-[#05081E] border border-emerald-400/40 text-emerald-300 p-4 rounded-none font-mono text-[10px] space-y-2 select-none relative overflow-hidden"
-                >
-                  <div className="absolute top-1.5 right-2 text-emerald-400 opacity-60">
-                    <Receipt className="w-4 h-4" />
-                  </div>
-                  <pre className="leading-tight text-center text-[9px]">{nfcReceipt.trim()}</pre>
-                  
-                  <button 
-                    onClick={() => {
-                      setNfcState('IDLE');
-                      setNfcReceipt(null);
-                    }}
-                    className="w-full mt-3 text-center border border-emerald-400/20 py-1 hover:bg-emerald-400/10 hover:text-white rounded-none text-[9px] duration-150 cursor-pointer font-bold"
-                  >
-                    센서 수동 초기화
-                  </button>
-                </motion.div>
-              )}
-            </div>
-          </div>
-
           {/* RETRO PHOTOSTAMP */}
           <div className="border-2 border-electric rounded-none p-6 bg-[#020516]/80 relative text-left box-solid-shadow">
             <div className="absolute top-4 right-4 text-electric">
@@ -828,7 +726,7 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
             </div>
 
             <h3 className="font-sans text-sm md:text-base font-bold text-soft-white mb-2 uppercase">
-              418 팀원들의 수줍은 초대장
+              CON:NECT의 수줍은 초대장
             </h3>
             <p className="font-sans text-[11px] text-faded-gray leading-relaxed mb-6 text-justify">
               이름을 입력하고 호출 신호를 보내보세요! 전시 기획단(근영, 미소, 지윤, 주연, 예빈) 중 한 명이 랜덤하게 등장하여, {boothName ? `${boothName}님만을` : "관람객님만을"} 위한 위트 있고 따뜻한 초대 메시지를 직접 띄워 줍니다.
@@ -866,8 +764,8 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
                   exit={{ opacity: 0 }}
                   className="mt-6 p-4 border border-electric bg-royal/20 rounded-none relative"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-none border border-electric flex items-center justify-center bg-royal/30 text-lg shrink-0 select-none">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-none border border-electric flex items-center justify-center bg-royal/30 text-xl shrink-0 select-none">
                       {selectedQuote.avatar}
                     </div>
                     <div className="flex-1">
@@ -875,11 +773,11 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
                         <span className="font-sans font-bold text-xs text-white">
                           {selectedQuote.sender}
                         </span>
-                        <span className="font-mono text-[9px] text-electric">
+                        <span className="font-mono text-[9px] text-[#4261FF]">
                           ({selectedQuote.role})
                         </span>
                       </div>
-                      <p className="font-sans text-[11px] text-white/95 leading-relaxed bg-[#05081E] p-3 border border-electric/20 rounded-none italic text-justify">
+                      <p className="font-sans text-[11px] text-white/95 leading-relaxed bg-[#05081E] p-4 border border-electric/20 rounded-none italic text-justify">
                         {selectedQuote.text}
                       </p>
                     </div>
@@ -896,6 +794,233 @@ export default function Run({ humanTouchMode }: { humanTouchMode: boolean }) {
         </div>
 
       </div>
+
+      {/* 5. GIGA INTEGRATED MEMORY & EMOTE PRINTING STATION */}
+      <div className="flex justify-center mt-12 w-full pt-10 border-t-2 border-dashed border-electric/20 select-text">
+        
+        {/* Memory Upload and Receipt Print form */}
+        <div className="w-full max-w-lg border border-electric bg-[#05081E]/95 p-6 text-center box-solid-shadow relative flex flex-col justify-between min-h-[380px] text-left">
+          <div className="absolute top-2 left-2 text-[7px] font-mono text-electric/40 uppercase select-none">
+            // SLOT_0x418_MEMORY_PRINT_STATION
+          </div>
+          
+          <div className="flex flex-col items-center justify-center my-auto py-2">
+            <div className="w-10 h-10 border border-electric/30 bg-electric/10 text-electric rounded-none flex items-center justify-center mb-3 select-none animate-pulse">
+              <Sparkles className="w-5 h-5" />
+            </div>
+
+            <h4 className="font-mono text-soft-white font-black text-sm tracking-widest uppercase mb-1 text-center">
+              your memory could be<br />printed here
+            </h4>
+            
+            <p className="font-sans text-[11px] text-faded-gray/70 leading-relaxed max-w-xs mx-auto mb-6 text-center">
+              기계들 속에 당신의 따뜻한 오차를 입력해보세요. 한 줄의 기억을 쓰고 영수증을 출력하면 실시간 보일링 영수증으로 실물 방출됩니다.
+            </p>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              handlePrintReceipt(commentInput.trim() || "서툰 우리의 아름다운 오늘, CON:NECT 전시에서.");
+            }} className="w-full space-y-3">
+              <input 
+                type="text" 
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
+                placeholder="지저분한 사적인 파편 적기 (Write memory...)"
+                maxLength={45}
+                className="w-full bg-black border border-electric/40 text-[11px] px-3 py-2 text-white font-sans focus:outline-none focus:border-electric rounded-none text-center"
+              />
+              <button 
+                type="submit"
+                className="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-2 active:scale-95 border border-transparent"
+              >
+                <Printer className="w-3.5 h-3.5" /> 영수증 출력
+              </button>
+            </form>
+          </div>
+
+          <div className="border-t border-electric/10 pt-3 flex flex-col gap-0.5 text-[8.5px] font-mono text-faded-gray/40 select-none text-center">
+            <span>READY_FOR_HUMAN::SLOTS_OPEN_SANS</span>
+            <span>Awaiting manual override...</span>
+          </div>
+        </div>
+
+      </div>
+
+      {/* IMMERSIVE THERMAL VOUCHER PRINT OVERLAY */}
+      <AnimatePresence>
+        {(isPrinting || activeReceipt) && (
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-xs z-50 flex flex-col items-center justify-start pt-[8vh] overflow-y-auto select-none px-4 pb-12 font-mono">
+            {/* The Physical printer header slot */}
+            <div className="w-80 max-w-full bg-[#2a2a2d] border-2 border-[#121214] p-1.5 shadow-2xl z-10 box-solid-shadow relative">
+              <div className="bg-[#0f0f11] h-6 rounded-sm border border-black flex items-center justify-between px-3 text-[8px] text-faded-gray/50">
+                <span>CON:NECT EMOTIONAL_PRINTER v2.4r</span>
+                <div className="flex gap-1.5">
+                  <div className={`w-1.5 h-1.5 rounded-full ${isPrinting ? 'bg-amber-400 animate-ping' : 'bg-emerald-400'}`} />
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                </div>
+              </div>
+              {/* Paper slit mouth */}
+              <div className="bg-black h-2 w-11/12 mx-auto mt-1 border border-neutral-700 relative overflow-hidden" />
+            </div>
+
+            {/* Printing Progress state or Printed Receipt Ticket */}
+            {isPrinting ? (
+              <motion.div
+                initial={{ height: 10, opacity: 0.9 }}
+                animate={{ height: 120 }}
+                className="w-72 bg-neutral-200 text-neutral-800 p-4 border-x border-dashed border-neutral-400 shadow-md overflow-hidden font-mono flex flex-col justify-center items-center"
+              >
+                <div className="text-zinc-650 text-[10px] uppercase font-bold animate-pulse mb-3 select-none">
+                  📠 EMITTING PRINT SIGNAL / 영수증 출력 중...
+                </div>
+                {/* Sound raw wave indicator bars */}
+                <div className="flex items-end justify-center gap-1 h-6 w-32 mb-3 select-none">
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ height: [4, 24, 4] }}
+                      transition={{ duration: 0.2 + i * 0.04, repeat: Infinity, ease: 'easeInOut' }}
+                      className="w-1.5 bg-neutral-600"
+                    />
+                  ))}
+                </div>
+                <div className="w-full bg-neutral-300 border border-neutral-400 h-3 flex overflow-hidden">
+                  <div className="bg-electric h-full" style={{ width: `${printProgress}%` }} />
+                </div>
+                <span className="text-[8px] text-zinc-500 mt-1 select-none font-bold uppercase">{printProgress}% COMPLETED / THERMAL PRINT SYNC</span>
+              </motion.div>
+            ) : (
+              activeReceipt && (
+                <motion.div
+                  initial={{ y: -50, opacity: 0, height: 0 }}
+                  animate={{ y: 0, opacity: 1, height: 'auto' }}
+                  exit={{ y: -50, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 85, damping: 14 }}
+                  className="w-72 bg-[#f9f9fb] text-[#121212] p-5 border-x-4 border-dashed border-neutral-300 relative shadow-2xl flex flex-col justify-between shrink-0 select-text font-mono"
+                  style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.01) 50%, rgba(255,255,255,0.02) 50%)', backgroundSize: '100%_4px' }}
+                >
+                  <div className="absolute top-0 inset-x-0 h-1 border-t-4 border-dashed border-neutral-400" />
+                  <div className="absolute inset-y-0 right-0 w-2.5 bg-gradient-to-l from-black/5 to-transparent pointer-events-none" />
+
+                  {/* HEADER BRANDING */}
+                  <div className="text-center font-sans">
+                    <span className="text-[9px] border-2 border-black px-2 py-0.5 tracking-widest font-extrabold uppercase">
+                      EXHIBITION VOUCHER
+                    </span>
+                    <h2 className="font-sans font-black text-xl tracking-tighter mt-3">// CON:NECT //</h2>
+                    <p className="text-[7px] font-mono tracking-widest leading-none text-zinc-500 my-1 font-bold">
+                      INHA UNIV / ART & HUMANITIES 418
+                    </p>
+                    <div className="border-b border-dashed border-neutral-400 my-3.5" />
+                  </div>
+
+                  {/* COGNITIVE DATA TABLE */}
+                  <div className="space-y-1.5 text-[9px] leading-tight mb-4 select-text">
+                    <div className="flex justify-between font-bold">
+                      <span>DOCUMENT_ID:</span>
+                      <span>{activeReceipt.id}</span>
+                    </div>
+                    <div className="flex justify-between font-medium">
+                      <span>DATETIME:</span>
+                      <span className="text-right">{activeReceipt.date}</span>
+                    </div>
+                    <div className="flex justify-between font-medium">
+                      <span>GATE_PORT:</span>
+                      <span>3000 (INBOUND_HTTPS)</span>
+                    </div>
+                    <div className="flex justify-between text-[#FF3366] font-bold border-y border-dashed border-neutral-300 py-1.5 my-1.5 bg-[#FF3366]/5 select-none">
+                      <span>EMOTIONAL DENSITY:</span>
+                      <span>{activeReceipt.density} (♨ BOILING)</span>
+                    </div>
+                  </div>
+
+                  {/* THE CORE TEXT CONTAINER */}
+                  <div className="my-2.5 py-3.5 border-y-2 border-black bg-stone-50 p-3 text-[11.5px] font-sans font-semibold leading-relaxed text-zinc-900 border-dashed text-justify select-text">
+                    <p className="italic text-center text-zinc-400 font-mono text-[8px] pb-2 tracking-widest leading-none">// RAW MESSAGE TRACE //</p>
+                    &ldquo;{activeReceipt.text}&rdquo;
+                  </div>
+
+                  {/* METADATA CODES */}
+                  <div className="text-center space-y-1 mt-2.5 select-none">
+                    <pre className="text-[7.5px] text-zinc-800 leading-tight font-bold antialiased select-all inline-block bg-white p-1 border border-neutral-200">
+{`      (  )   (  )
+       ||     ||
+    .-"""""""""""-.
+   /   C O N :     \\
+  |   N E C T       | =====> LIVE
+   \\   4 1 8       /
+    '-___________-'
+        | || |`}
+                    </pre>
+
+                    <div className="text-[9.5px] font-black text-zinc-800 uppercase leading-snug mt-2 select-text">
+                      당신의 서툰 오늘을 보증함.
+                    </div>
+                    <p className="text-[7.5px] text-zinc-550 max-w-[200px] mx-auto leading-normal select-text">
+                      We guarantee the warmth of your imperfections in this cold, hyper-efficient digital matrix network flow.
+                    </p>
+                  </div>
+
+                  {/* BARCODE SIMULATION */}
+                  <div className="mt-4 pt-3 border-t border-dashed border-neutral-400 text-center select-none font-mono">
+                    <div className="text-xs tracking-[4px] font-black h-5 flex overflow-hidden justify-center items-center select-all">
+                      ||||||| | | |||| ||| || | |||| || ||
+                    </div>
+                    <span className="text-[8px] text-zinc-500 font-bold uppercase tracking-widest block mt-1">
+                      CODE_418_AES_EMOTION_VOUCHER
+                    </span>
+                  </div>
+
+                  {/* CONTROLS */}
+                  <div className="mt-5 pt-3 border-t border-stone-300 flex flex-col gap-2 font-mono text-[9px] select-none">
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            `[CON:NECT EMOTIONAL RECEIPT]\nID: ${activeReceipt.id}\nDATE: ${activeReceipt.date}\nCAPSULE: "${activeReceipt.text}"\nWe guarantee the warmth of your imperfections.`
+                          );
+                          playLocalBeep(1000, 'sine', 0.1);
+                          setTimeout(() => playLocalBeep(1500, 'sine', 0.1), 70);
+                        }}
+                        className="py-2 bg-neutral-800 text-white hover:bg-black transition-all cursor-pointer text-center font-bold flex items-center justify-center gap-1 hover:scale-101 border border-neutral-400"
+                      >
+                        <Copy className="w-3.5 h-3.5" /> 텍스트 복사
+                      </button>
+                      <button
+                        onClick={() => {
+                          playLocalBeep(1100, 'sawtooth', 0.08);
+                          handlePrintReceipt(activeReceipt.text);
+                        }}
+                        className="py-2 bg-amber-500 text-black font-extrabold hover:bg-amber-400 transition-all cursor-pointer text-center flex items-center justify-center gap-1 hover:scale-101"
+                      >
+                        <Printer className="w-3.5 h-3.5" /> 다시 인쇄
+                      </button>
+                    </div>
+                    
+                    <button
+                      onClick={() => {
+                        playLocalBeep(440, 'sine', 0.06);
+                        setTimeout(() => playLocalBeep(220, 'sine', 0.1), 60);
+                        setActiveReceipt(null);
+                      }}
+                      className="w-full py-2 bg-stone-300 text-neutral-850 hover:bg-rose-500 hover:text-white transition-all cursor-pointer font-bold text-center border border-neutral-400"
+                    >
+                      영수증 회수 (창 닫기)
+                    </button>
+                  </div>
+
+                  {/* Jagged bottom rip */}
+                  <div className="absolute -bottom-1.5 inset-x-0 h-1.5 flex overflow-hidden select-none">
+                    {[...Array(24)].map((_, i) => (
+                      <div key={i} className="w-3 h-3 bg-neutral-300 rotate-45 transform origin-top-left flex-shrink-0" />
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            )}
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
