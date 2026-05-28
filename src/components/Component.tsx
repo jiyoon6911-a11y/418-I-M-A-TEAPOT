@@ -313,7 +313,7 @@ export default function Component({ humanTouchMode }: { humanTouchMode: boolean 
                 
                 {/* IMAGE WRAPPER WITH PRECISE MOCKUPS */}
                 {currentImgUrl && (
-                  <div className="relative w-full aspect-16/10 mb-5 overflow-hidden border border-electric/25 bg-[#030514] flex items-center justify-center p-3">
+                  <div className="relative z-50 w-full aspect-16/10 mb-5 overflow-hidden border border-electric/25 bg-[#030514] flex items-center justify-center p-3">
                     <img 
                       src={currentImgUrl} 
                       alt={artifact.name} 
@@ -381,7 +381,7 @@ export default function Component({ humanTouchMode }: { humanTouchMode: boolean 
       </div>
       
       {/* RETRO 1998 SYSTEM ERROR DIALOG BOX (SOUVENIR INFORMATION STICKER) */}
-      <div className="mt-16 mb-8 flex justify-center w-full relative z-10 animate-fade-in group/dialog select-none">
+      <div className="mt-16 mb-8 flex justify-center w-full relative z-50 animate-fade-in group/dialog select-none">
         <div className="w-full max-w-lg bg-[#c0c0c0] text-black p-[3px] shadow-[6px_6px_0px_rgba(0,0,0,0.45)] border-2 border-t-white border-l-white border-r-[#404040] border-b-[#404040] font-sans relative">
           
           {/* Combo indicator badge */}

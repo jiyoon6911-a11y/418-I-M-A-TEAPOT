@@ -241,37 +241,38 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         </div>
       </div>
 
+      {/* SECTION TOP HEADER */}
+      <div className="border-b border-[#10B981]/30 pb-6 mb-12">
+        <span className="font-mono text-[9px] text-[#10B981] tracking-widest block mb-1 uppercase select-none">
+          // EXHIBITION_LOG_BOARD // VER_3.02 // LOGS
+        </span>
+        <h2 className="font-sans font-bold text-3xl md:text-6xl text-soft-white tracking-tighter uppercase flex flex-col md:flex-row md:items-baseline">
+          <span>③ FEED</span>
+          <span className="text-lg md:text-3xl text-faded-gray/70 font-medium tracking-normal md:ml-4 mt-1 md:mt-0">_INSTAGRAM</span>
+        </h2>
+        <p className="font-sans text-xs md:text-sm text-faded-gray/70 leading-relaxed max-w-3xl mt-3">
+          차가운 디지털 공간 위에 커넥트가 더한 인간적인 <strong>&apos;터치&apos;</strong>, 그리고 관객 여러분의 참여로 완성되어 가는 생동감 넘치는 기록 보관소입니다.
+        </p>
+      </div>
+
       {/* EXHIBITION MAIN META BRAND PANEL */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-        <div className="lg:col-span-8 border-2 border-[#10B981] bg-[#0c1236]/90 p-6 md:p-8 relative overflow-hidden box-solid-shadow">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <span className="font-mono text-[10px] bg-[#10B981] text-white px-2.5 py-1 uppercase tracking-widest font-bold inline-block mb-3 select-none">
-            EXHIBITION LOG BOARD
+        <div className="lg:col-span-8 p-1 flex flex-col justify-center">
+          <span className="font-mono text-[8.5px] text-[#10B981] tracking-widest block mb-3 uppercase select-none">
+            // SOCIAL_CONNECT_GATEWAY // WEB_PORTAL_ROUTE
           </span>
-          
-          <h1 className="font-sans font-black text-3xl md:text-6xl text-soft-white tracking-tighter leading-none mb-4 uppercase flex flex-col md:flex-row md:items-baseline">
-            <span>③ FEED</span>
-            <span className="text-lg md:text-3xl text-faded-gray/70 font-medium tracking-normal md:ml-4 mt-1 md:mt-0">_Instagram</span>
-          </h1>
-          
-          <p className="font-sans text-sm md:text-md text-faded-gray leading-relaxed max-w-2xl text-justify mb-6 font-semibold">
-            이 피드는 단순한 전시 정보 채널이 아닙니다. 이 공간은 시스템의 완벽함에 균열을 내는 인간의 서투른 흔적, 
-            디지털 공간에 끈적하게 달라붙은 따뜻한 외로움과 사유를 박제해 둔 <strong>&apos;감정적 파편 저장소&apos;</strong>입니다. 
-            완성된 아카이브부터, 가열을 임계점까지 유보 중인 조각들을 자유롭게 탐색해 보세요.
-          </p>
 
           <div className="flex flex-wrap gap-3 font-mono text-[10px]">
             <a 
-              href="https://www.instagram.com/iam.ateapot/"
+              href="https://www.instagram.com/connect.archive/"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => triggerBeep(440, 'sine', 0.12)}
-              className="px-3.5 py-2 border-2 border-[#10B981] text-white hover:bg-[#10B981] transition-all duration-300 flex items-center gap-2 font-bold box-solid-shadow"
+              className="px-3.5 py-2 border border-[#10B981] text-white hover:bg-[#10B981]/20 transition-all duration-300 flex items-center gap-2 font-bold"
             >
-              <Globe className="w-3.5 h-3.5" /> INSTAGRAM::@iam.ateapot ↗
+              <Globe className="w-3.5 h-3.5" /> INSTAGRAM::@connect.archive ↗
             </a>
-            <div className="px-3.5 py-2 border-2 border-[#10B981]/40 bg-[#090e29]/70 text-[#4261FF] font-semibold flex items-center gap-2 select-none">
+            <div className="px-3.5 py-2 border border-[#10B981]/30 bg-[#0c1236]/30 text-[#10B981] font-semibold flex items-center gap-2 select-none">
               <span>ACTIVE_RELEASES = 02</span>
               <span>•</span>
               <span>REACTIONS = {likesCount['post-teapot'] + likesCount['post-retro-desktop']}</span>
@@ -343,7 +344,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
               <div className="absolute bottom-8 right-0 w-8 h-8 border-b-[3.5px] border-r-[3.5px] border-white rounded-br-[12px]" />
 
               {/* Real 3D-feeling teapot photo requested by user */}
-              <div className="relative w-44 h-32 md:w-64 md:h-48 flex items-center justify-center mb-1">
+              <div className="relative z-50 w-44 h-32 md:w-64 md:h-48 flex items-center justify-center mb-1">
                 <img 
                   src={teapotImg} 
                   alt="3D Teapot Monitor" 

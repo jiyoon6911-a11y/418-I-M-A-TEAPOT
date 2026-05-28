@@ -172,7 +172,7 @@ export default function SystemAdmin({ humanTouchMode }: { humanTouchMode: boolea
                 <ExternalLink className="w-3.5 h-3.5 ml-0.5 opacity-80" />
               </a>
               <a 
-                href="https://www.instagram.com/connect.archive?igsh=a2IzOHdoNTdoaXRv"
+                href="https://www.instagram.com/connect.archive/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-4 py-2 border border-electric bg-electric/10 hover:bg-electric text-white font-sans text-xs font-bold transition-all cursor-pointer box-solid-shadow"
