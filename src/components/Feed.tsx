@@ -5,7 +5,7 @@ import {
   Heart, MessageSquare, Terminal as TermIcon, ShieldAlert, WifiOff, 
   FileText, ChevronLeft, ChevronRight, Send, Flame, Coffee, Sparkles, 
   Folder, Play, Square, SkipForward, Info, Trash2, Globe,
-  Printer, Smile, Scissors, Layers, CheckCircle2, Copy, X
+  Printer, Smile, Scissors, Layers, CheckCircle2, Copy, X, Instagram
 } from 'lucide-react';
 
 // Types for the Feed
@@ -228,20 +228,7 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
         <div className="absolute top-1/2 right-1/4 animate-bounce">HUMAN_COORDINATE_CONNECTED</div>
       </div>
 
-      {/* HEADER PIPELINE MONITOR BAR */}
-      <div className="w-full bg-[#101b7a]/40 border-2 border-[#10B981] p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 box-solid-shadow select-none">
-        <div className="flex items-center gap-3">
-          <div className="w-3.5 h-3.5 bg-rose-500 rounded-none animate-ping" />
-          <div className="font-mono text-xs text-soft-white tracking-widest text-[#4261FF]">
-            STATUS:: <span className="text-emerald-400 font-bold">EMOTIONAL_ARCHIVE_SYS_ONLINE</span> (v2.0)
-          </div>
-        </div>
-        <div className="flex gap-4 font-mono text-[10px] text-faded-gray/60">
-          <span>COREDump_SIZE: 98.6KB</span>
-          <span>STABLE_REFLUX = 12%</span>
-          <span>HUMAN_DETECTION = TRUE</span>
-        </div>
-      </div>
+
 
       {/* SECTION TOP HEADER */}
       <div className="border-b border-[#10B981]/30 pb-6 mb-12">
@@ -258,52 +245,17 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
       </div>
 
       {/* EXHIBITION MAIN META BRAND PANEL */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-        <div className="lg:col-span-8 p-1 flex flex-col justify-center">
-          <span className="font-mono text-[8.5px] text-[#10B981] tracking-widest block mb-3 uppercase select-none">
-            // SOCIAL_CONNECT_GATEWAY // WEB_PORTAL_ROUTE
-          </span>
-
-          <div className="flex flex-wrap gap-3 font-mono text-[10px]">
-            <a 
-              href="https://www.instagram.com/connect.archive/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => triggerBeep(440, 'sine', 0.12)}
-              className="px-3.5 py-2 border border-[#10B981] text-white hover:bg-[#10B981]/20 transition-all duration-300 flex items-center gap-2 font-bold"
-            >
-              <Globe className="w-3.5 h-3.5" /> INSTAGRAM::@connect.archive ↗
-            </a>
-            <div className="px-3.5 py-2 border border-[#10B981]/30 bg-[#0c1236]/30 text-[#10B981] font-semibold flex items-center gap-2 select-none">
-              <span>ACTIVE_RELEASES = 02</span>
-              <span>•</span>
-              <span>REACTIONS = {likesCount['post-teapot'] + likesCount['post-retro-desktop']}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* COMPACT INTERACTIVE MONITOR MODULE */}
-        <div className="lg:col-span-4 border-2 border-[#10B981] bg-[#020516] p-5 flex flex-col justify-between box-solid-shadow relative">
-          <div className="absolute top-2 right-3 font-mono text-[8px] text-[#10B981]/60 select-none">
-             DEBUG_MONITOR_SYS
-          </div>
-          <div className="mb-4">
-            <span className="font-mono text-[9px] text-[#10B981] block mb-2 font-bold">// REAL_TIME_STREAMING_LOGS</span>
-            <div className="font-mono text-[10px] text-emerald-400 bg-black/60 p-3 h-32 overflow-y-auto border border-[#10B981]/20 space-y-1.5 custom-scrollbar">
-              {terminalLogs.map((log, i) => (
-                <div key={i} className="leading-normal flex tracking-tight">
-                  <span className="text-[#10B981] mr-1.5 select-none">&gt;</span>
-                  <span className="break-all">{log}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="border-t border-[#10B981]/20 pt-3 flex items-center justify-between text-[10px] font-mono">
-            <span className="text-faded-gray/50">SYSTEM TEMPERATURE:</span>
-            <span className="text-amber-400 font-bold animate-pulse">98.6°C (HUMAN_LIMIT)</span>
-          </div>
-        </div>
+      <div className="w-full mb-12 flex justify-start">
+        <a 
+          href="https://www.instagram.com/iam.ateapot/"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => triggerBeep(520, 'sine', 0.15)}
+          className="relative group px-6 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-[#4261FF] text-white font-mono text-xs md:text-sm font-bold tracking-widest transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center gap-3.5 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_35px_rgba(66,97,255,0.6)] border-2 border-white rounded-none cursor-pointer uppercase font-black"
+        >
+          <Instagram className="w-5 h-5 animate-pulse" />
+          <span>INSTAGRAM 바로가기 @iam.ateapot ↗</span>
+        </a>
       </div>
 
       {/* TABS FOR FEED SECTIONS */}
