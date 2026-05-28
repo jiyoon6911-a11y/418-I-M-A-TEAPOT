@@ -418,8 +418,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="기획진 인터뷰"
               subtitle="기획단의 열정과 밤샘 기록"
-              estimatedRelease="D-3 RELEASE"
-              leakText="'내일까지 안 끝나면 주전자에 직접 들어가겠습니다!' 기획진의 끓어오르는 열정 인터뷰."
             />
 
             {/* ========================================== */}
@@ -428,8 +426,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="참여 과목 소개 및 교수님 인터뷰"
               subtitle="기술과 예술의 학문적 조화"
-              estimatedRelease="D-2 RELEASE"
-              leakText="교수님: '마감 기한만 정직하게 지켜준다면 학생들을 무기한 사랑하겠습니다.'"
             />
 
             {/* ========================================== */}
@@ -438,8 +434,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="포스터 공모전 대상 인터뷰"
               subtitle="대상을 사로잡은 단 하나의 에러 비주얼"
-              estimatedRelease="D-1 RELEASE"
-              leakText="대망의 대상 단독 인터뷰! 과연 영예의 대상 주인공은 누구일까요?"
             />
 
             {/* ========================================== */}
@@ -448,8 +442,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 출품작 인터뷰"
               subtitle="작품 픽셀 너머에 심은 고유한 숨소리"
-              estimatedRelease="EXHIBITION_DAY"
-              leakText="작가: '작품명: [종강은 오는가]. 침대와 한몸이 된 처절한 데이터 시그널.'"
             />
 
             {/* ========================================== */}
@@ -458,8 +450,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 관람 안내(오시는 길/배치도 등)"
               subtitle="전시장 오시는 길 및 공간 배치도 안내"
-              estimatedRelease="LOCATION_ACTIVE"
-              leakText="CLC 건물 구석에서 다급하게 찻잔을 들고 서성이는 사람들을 발견했다면 도착!"
             />
 
             {/* ========================================== */}
@@ -468,8 +458,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 관람 플레이리스트"
               subtitle="감성을 자극하는 완벽한 음악 트랙"
-              estimatedRelease="STREAMING_DELAYED"
-              leakText="트랙 1: 기획단 밤샘 비명소리 (Remix ver.), 트랙 2: 키보드 폭풍 타건 ASMR"
             />
 
             {/* ========================================== */}
@@ -478,8 +466,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="D-3/D-2/D-1 카운트다운"
               subtitle="하루마다 뜨겁게 달아오르는 디데이 기록"
-              estimatedRelease="T-MINUS COUNT"
-              leakText="전시 오픈에 다가올수록 에라 모르겠다 과열 모드가 418%까지 도달 중!"
             />
 
             {/* ========================================== */}
@@ -488,8 +474,6 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="현장 스케치 및 전시 비하인드"
               subtitle="지저분하지만 눈부신 설치 현장 스냅"
-              estimatedRelease="LIVE_BUFFERING"
-              leakText="작품 뒤에 쓸쓸하게 뒹구는 빈 커피 캔과 눅눅한 야식 봉지가 진짜 비하인드."
             />
           </motion.div>
         )}
@@ -505,49 +489,22 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
 interface ComingSoonCardProps {
   title: string;
   subtitle: string;
-  estimatedRelease: string;
-  leakText: string;
 }
 
-function ComingSoonCard({ title, subtitle, estimatedRelease, leakText }: ComingSoonCardProps) {
+function ComingSoonCard({ title, subtitle }: ComingSoonCardProps) {
   return (
     <div 
-      className="border-2 border-dashed border-[#10B981]/25 bg-royal/5 p-5 relative overflow-hidden box-solid-shadow flex flex-col justify-between transition-all duration-300 select-none hover:border-[#10B981]/50 hover:bg-royal/10 group min-h-[170px]"
+      className="border-2 border-dashed border-[#10B981]/15 bg-royal/5 p-5 relative overflow-hidden box-solid-shadow flex flex-col justify-center transition-all duration-300 select-none hover:border-[#10B981]/30 hover:bg-royal/10 group min-h-[110px]"
     >
-      {/* Top Header Metadata */}
-      <div className="flex justify-between items-center text-[9px] font-mono select-none mb-3">
-        <span className="text-[#10B981]/70 font-bold uppercase tracking-wider">// COMING_SOON</span>
-        <span className="text-amber-400 font-bold bg-[#10B981]/10 px-2 py-0.5 border border-[#10B981]/20">{estimatedRelease}</span>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col justify-between gap-4">
-        {/* Title and Subtitle */}
-        <div className="text-left select-text">
-          <h4 className="font-sans text-sm md:text-base font-extrabold text-soft-white mb-1.5 leading-snug tracking-tight group-hover:text-[#10B981] transition-colors duration-200">
-            {title}
-          </h4>
-          {subtitle && (
-            <p className="font-sans text-[11px] text-faded-gray/90 leading-normal font-medium">
-              {subtitle}
-            </p>
-          )}
-        </div>
-
-        {/* Flat readable teaser quote */}
-        {leakText && (
-          <div className="border-l-2 border-[#10B981]/40 pl-3 py-1 bg-black/20 text-left select-text">
-            <p className="font-sans text-[11px] text-emerald-300 italic leading-relaxed">
-              &ldquo;{leakText}&rdquo;
-            </p>
-          </div>
+      <div className="text-left select-text">
+        <h4 className="font-sans text-sm md:text-base font-extrabold text-soft-white mb-1.5 leading-snug tracking-tight group-hover:text-[#10B981] transition-colors duration-200">
+          {title}
+        </h4>
+        {subtitle && (
+          <p className="font-sans text-[11px] text-faded-gray/90 leading-normal font-medium">
+            {subtitle}
+          </p>
         )}
-      </div>
-
-      {/* Bottom info section */}
-      <div className="border-t border-[#10B981]/10 mt-4 pt-3 flex justify-between items-center text-[9px] font-mono text-faded-gray/30 select-none">
-        <span>SECURITY_KEY: 0x418_AES_256</span>
-        <span className="text-faded-gray/40">READY_FOR_COMMUNITY</span>
       </div>
     </div>
   );
