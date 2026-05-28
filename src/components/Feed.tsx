@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import teapotImg from '../assets/images/3d_teapot_monitor_1779611146496.png';
+import feed1 from '../assets/images/feed_1.png';
+import feed2 from '../assets/images/feed_2.png';
+import feed3 from '../assets/images/feed_3.png';
+import feed4 from '../assets/images/feed_4.png';
+import feed5 from '../assets/images/feed_5.png';
 import { 
   Heart, MessageSquare, Terminal as TermIcon, ShieldAlert, WifiOff, 
   FileText, ChevronLeft, ChevronRight, Send, Flame, Coffee, Sparkles, 
@@ -50,9 +55,26 @@ const playSound = (freq: number, type: OscillatorType = 'sine', duration: number
 
 export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
   const [likesCount, setLikesCount] = useState<Record<string, number>>({
-    'post-teapot': 418,
-    'post-retro-desktop': 255
+    '1': 418,
+    '2': 255,
+    '3': 189,
+    '4': 304,
+    '5': 276
   });
+
+  const [imageSrcs, setImageSrcs] = useState<Record<string, string>>({
+    '1': feed1,
+    '2': feed2,
+    '3': feed3,
+    '4': feed4,
+    '5': feed5
+  });
+
+  const handleImageError = (id: string) => {
+    setImageSrcs(prev => {
+      return { ...prev, [id]: 'fallback' };
+    });
+  };
   
   const [activeTab, setActiveTab] = useState<'uploaded' | 'upcoming'>('uploaded');
   
@@ -215,6 +237,110 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
     }
   ];
 
+  // Helper definition for Instagram posts (supporting Wide landscape and Square 1x1 layouts)
+  const renderInstagramPost = (post: { id: string; title: string; category: string; caption: string; date: string; link: string; }, isWide: boolean) => {
+    return (
+      <div 
+        key={post.id}
+        className={`border-2 border-[#10B981] bg-[#020516] relative flex flex-col ${isWide ? 'md:flex-row w-full md:col-span-3' : 'col-span-1'} justify-between box-solid-shadow group transition-all duration-300 hover:border-[#10B981] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] overflow-hidden`}
+      >
+        {/* Header metadata tag (Only for square layout on top, wide layout on top of right panel) */}
+        {!isWide && (
+          <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[9px] min-h-[38px]">
+            <span className="text-[#10B981] font-bold uppercase tracking-wider">// POST::00{post.id} // {post.category}</span>
+            <div className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-emerald-400 text-[8px] font-black tracking-tight">CONNECTED</span>
+            </div>
+          </div>
+        )}
+
+        {/* Post Image with error fallback */}
+        <div className={`relative ${isWide ? 'w-full md:w-[60%] aspect-video md:aspect-auto md:min-h-[380px]' : 'aspect-square w-full'} bg-black/60 flex items-center justify-center p-4 border-[#10B981]/10 overflow-hidden ${isWide ? 'border-b md:border-b-0 md:border-r' : 'border-b'}`}>
+          {imageSrcs[post.id] === 'fallback' ? (
+            <div className="flex flex-col items-center justify-center text-center p-6 select-none">
+              <div className="w-9 h-9 rounded-none border border-amber-500/30 bg-amber-500/10 text-amber-400 flex items-center justify-center mb-2.5 animate-pulse font-mono font-bold text-xs">
+                !
+              </div>
+              <span className="text-[10px] font-mono text-amber-400/90 font-bold uppercase tracking-wider">IMAGE DISCONNECTED</span>
+              <span className="text-[8px] font-mono text-faded-gray/50 mt-1 uppercase">Awaiting file: feed_{post.id}.jpg</span>
+            </div>
+          ) : (
+            <img 
+              src={imageSrcs[post.id]} 
+              alt={post.title}
+              onError={() => handleImageError(post.id)}
+              className="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_20px_rgba(16,185,129,0.22)] group-hover:scale-103 transition-transform duration-500"
+            />
+          )}
+          {/* Aspect tag */}
+          <div className="absolute top-2 right-2 text-[7px] font-mono text-emerald-400/30 select-none bg-black/40 px-1 py-0.5">
+            {isWide ? '// INSTA_POST_WIDE_LANDSCAPE' : '// INSTA_POST_1X1'}
+          </div>
+        </div>
+
+        {/* Content Panel */}
+        <div className={`flex flex-col justify-between relative ${isWide ? 'w-full md:w-[40%] bg-black/20' : 'px-4 pb-4 pt-0 bg-[#020516]'}`}>
+          
+          {isWide && (
+            <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[9px] min-h-[38px]">
+              <span className="text-[#10B981] font-bold uppercase tracking-wider">// POST::00{post.id} // {post.category}</span>
+              <div className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-emerald-400 text-[8px] font-black tracking-tight">CONNECTED</span>
+              </div>
+            </div>
+          )}
+
+          {/* Overlapping retro Windows 95 style Error Warning Block for caption content */}
+          <div className={`relative ${isWide ? 'my-auto px-4 pb-4 pt-8' : 'px-1 pt-1'}`}>
+            <div className={`relative bg-[#c0c0c0] border-2 border-t-white border-l-white border-r-[#808080] border-b-[#808080] shadow-[3px_3px_10px_rgba(0,0,0,0.5)] p-2 text-black transition-transform duration-300 group-hover:-translate-y-1 z-10 ${!isWide ? '-mt-7 mx-0 mb-4' : ''}`}>
+              {/* Retro Windows Title Bar */}
+              <div className="bg-[#000080] text-white px-2 py-0.5 text-[8.5px] font-mono flex justify-between items-center select-none font-bold">
+                <span className="flex items-center gap-1.5 tracking-tight">
+                  <TermIcon className="w-2.5 h-2.5 text-yellow-300 animate-pulse" /> 
+                  {post.title}
+                </span>
+                <span className="text-[8.5px] bg-[#c0c0c0] text-black w-3.5 h-3.5 border border-t-white border-l-white border-[#606060] flex items-center justify-center font-bold font-sans">✕</span>
+              </div>
+              {/* Window Content */}
+              <div className="bg-white p-2 mt-1 border border-[#808080] text-[11px] text-zinc-900 leading-normal font-sans font-semibold text-justify select-text whitespace-pre-line">
+                {post.caption}
+              </div>
+            </div>
+            
+            {/* Metadata Indicators & Likes Row */}
+            <div className="flex items-center justify-between border-t border-[#10B981]/20 pt-3 select-none font-mono text-[9px] text-emerald-400/60 font-bold">
+              <span>{post.date}</span>
+              <button 
+                onClick={() => handleLike(post.id)}
+                className="flex items-center gap-1.5 text-rose-400 hover:text-rose-300 transition-all font-mono text-xs cursor-pointer select-none border border-rose-500/20 bg-rose-500/5 px-2.5 py-1 box-solid-shadow active:scale-95"
+              >
+                <Heart className="w-3.5 h-3.5 fill-rose-500 stroke-rose-500" />
+                <span>{likesCount[post.id] || 0}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Direct Big Link Button (가장 눈에 띄게 큰 버튼) */}
+          <div className="p-3 bg-black/40 border-t border-[#10B981]/20 mt-2">
+            <a 
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => triggerBeep(520, 'sine', 0.12)}
+              className="w-full py-3 bg-gradient-to-r from-emerald-500 via-teal-500 to-[#4261FF] text-white hover:brightness-110 font-mono text-center flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.25)] hover:shadow-[0_0_25px_rgba(66,97,255,0.55)] border-2 border-white rounded-none cursor-pointer uppercase font-black tracking-widest text-[11px] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <Instagram className="w-4 h-4 animate-pulse shrink-0" />
+              <span>INSTAGRAM 바로가기 ↗</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="relative w-full min-h-screen py-10 px-4 md:px-6 max-w-7xl mx-auto z-10 selection:bg-[#10B981] selection:text-white overflow-x-hidden">
       {/* SCANLINE / CRT FILTER OVERLAY */}
@@ -290,211 +416,185 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start w-full"
+            className="flex flex-col gap-12 w-full"
           >
-            {/* ========================================== */}
-            {/* 1. REAL POST: TEAPOT SCANNER (Post 1)       */}
-            {/* ========================================== */}
-            <div className="lg:col-span-2 border-2 border-[#10B981] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
-              {/* Header metadata tag */}
-              <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[10px]">
-                <span className="text-[#10B981] font-bold uppercase tracking-widest">// POST::001 // TEAPOT_SCANNER</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-[9px] font-bold">ARCHIVED_SUCCESSFULLY</span>
-                </div>
-              </div>
-
-              {/* REAL TIME SOCIAL CAPTION MODULE (IMAGE CONTAINER REMOVED) */}
-              <div className="p-5 md:p-6 select-text">
-                <h4 className="font-sans font-bold text-lg text-white mb-2 tracking-tight uppercase">
-                  🫖 𝗘𝗥𝗥𝗢𝗥 𝟰𝟭𝟴 𝗜&apos;𝗠 𝗔 𝗧𝗘𝗔𝗣𝗢𝗧 (Official Poster)
-                </h4>
-                <p className="font-sans text-xs text-faded-gray leading-relaxed text-justify mb-4">
-                  공식 아카이빙 비주얼 및 기획 포스터의 메인 콘셉트를 연동합니다. 
-                  커피를 내리라는 시스템의 압박에 가로막혔을 때, 기계는 스스로 찻주전자임을 수락함으로써 인간을 위로합니다. 
-                  수정되지 않은 날것의 감정을 담아 CLC에서 피어납니다.
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-[#10B981]/10 select-none">
-                  <div className="flex gap-4 font-mono text-[10px] text-faded-gray/50">
-                    <span>DATE: 2026.05.22</span>
-                    <span>CATEGORY: EXHIBITION_MAIN</span>
-                  </div>
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={() => handleLike('post-teapot')}
-                      className="flex items-center gap-1.5 text-rose-400 hover:text-rose-300 font-mono text-xs cursor-pointer select-none border border-rose-500/20 bg-rose-500/5 px-2.5 py-1"
-                    >
-                      <Heart className="w-3.5 h-3.5 fill-rose-500 stroke-rose-500" />
-                      <span>{likesCount['post-teapot']}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+            {/* ROW 1: One Wide Post (가로로 긴 이미지 구성) */}
+            <div className="w-full">
+              {renderInstagramPost({
+                id: '1',
+                title: '전시 접수 일정',
+                category: 'SCHEDULE',
+                caption: '전시 신청 마감: 2026. 05. 15. (금)\n작품 제출 시작: 2026. 05. 18. (월)\n오프라인 제출 마감: 2026. 05. 25. (월)\n온라인 제출 마감: 2026. 05. 27. (수)\n\n📍 2026.6.2.(화) - 4.(목)\n📍 캠퍼스라이프센터(CLC) 1층',
+                date: '2026.05.15',
+                link: 'https://www.instagram.com/p/DYOJ4ESyVB4/'
+              }, true)}
             </div>
 
-            {/* ========================================== */}
-            {/* 2. EMOTIONAL TEXT LOG (Vertical block)      */}
-            {/* ========================================== */}
-            <div className="border-2 border-[#10B981] bg-[#1a1c3e]/30 p-5 md:p-6 font-mono text-xs relative overflow-hidden box-solid-shadow select-text">
-              <div className="absolute -top-10 -left-10 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl pointer-events-none" />
-              
-              <div className="flex justify-between items-center border-b border-[#10B981]/20 pb-2.5 mb-4 font-bold select-none text-[9.5px]">
-                <span className="text-purple-400">[EMOTIONAL_TRACEBACK_011]</span>
-                <span className="text-[#10B981]">SYSTEM_CLOCK_UTC</span>
-              </div>
-
-              <div className="text-justify leading-relaxed text-soft-white space-y-3 font-semibold font-sans mb-6">
-                <p>
-                  &ldquo;시스템은 오류(Error)를 실패라고 정의합니다. 
-                  일정 내로 제출하지 못한 서류, 요구받은 정답을 내지 못한 결과, 
-                  온도를 지키지 못해 식어버린 커피.&rdquo;
-                </p>
-                <p className="text-emerald-300">
-                  &ldquo;하지만 우리는 이곳에서 에러 상태를 수락하기로 했습니다. 
-                  시간이 더 오래 걸리고, 조금 삐걱거리더라도, 
-                  그 안에 묻은 사람의 지문과 서툰 체온을 끄집어내는 것이 
-                  예술의 유일한 의무이기 때문입니다.&rdquo;
-                </p>
-              </div>
-
-              <div className="font-mono text-[8px] text-faded-gray/40 text-right select-none uppercase">
-                Captured on thermal logger at 05:14 AM
-              </div>
+            {/* ROW 2: Three Square Posts Side-by-Side (이미지 3개 구성) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-stretch animate-fade-in">
+              {renderInstagramPost({
+                id: '2',
+                title: '기획 의도',
+                category: 'ABOUT',
+                caption: '클릭 한 번이면 완벽한 결괏값이 나오는 매끄러운 시대.\n\n혹시 정답만을 요구하는 시스템 속에서 알 수 없는 피로감을 느낀 적은 없으신가요?\n\n이번 전시는 그 매끄러운 화면 뒤에 숨겨진, 창작자들의 엉뚱한 사유와 \'의도된 빈틈\'에 말을 건네며 시작되었습니다.\n\n모든 것이 자동화된 세상 속에서 완벽하지 않아도 괜찮은, 가장 인간적인 틈새로 여러분을 초대합니다.',
+                date: '2026.05.18',
+                link: 'https://www.instagram.com/p/DYMGbqQADFQ/?img_index=1'
+              }, false)}
+              {renderInstagramPost({
+                id: '3',
+                title: '콘셉트',
+                category: 'CONCEPT',
+                caption: '"커피를 내리라"는 명령에\n"나는 찻주전자라서 안 되는데?"\n라고 답하는 시스템\n\n1998년, 만우절 농담에서 유래한 이 엉뚱한 에러 코드는 단순한 고장이 아닙니다. 모두가 정해진 매뉴얼대로 똑같은 정답을 낼 때, 나만의 고유성을 지켜내는 아주 유쾌하고 능동적인 반항이죠.\n\n무조건적인 효율과 \'YES\'를 요구하는 세상 속에서, 여러분이 가진 가장 유쾌한 \'에러\'는 무엇인가요?',
+                date: '2026.05.24',
+                link: 'https://www.instagram.com/p/DYMGImLgG2Y/?img_index=1'
+              }, false)}
+              {renderInstagramPost({
+                id: '4',
+                title: '전시 주제',
+                category: 'THEME',
+                caption: '오차 없는 정교한 알고리즘보다 우리의 마음을 더 짙게 움직이는 건, 결국 사람의 감수성이 묻어나는 불완전한 순간들입니다.\n\n차가운 디지털 매체 안에 담긴 창작자들의 따뜻한 온기, \'휴먼 터치(Human Touch)\'.\n\n거대한 시스템 속에서도 결코 지워지지 않는 우리들의 고유한 인간다움을 이번 전시에서 직접 마주해 보세요.\n\n커피를 요구하는 세상, 따뜻한 차 한 잔 어떠세요? 🍵',
+                date: '2026.05.26',
+                link: 'https://www.instagram.com/p/DYMFR9IAFJw/?img_index=1'
+              }, false)}
             </div>
 
-            {/* ========================================== */}
-            {/* 3. REAL POST: WINDOWS 95 RETRO SCHEDULER   */}
-            {/* ========================================== */}
-            <div className="lg:col-span-2 border-2 border-[#10B981] bg-[#04071f] relative box-solid-shadow group transition-all duration-300">
-              {/* Header metadata tag */}
-              <div className="p-3 bg-[#101b7a]/40 border-b border-[#10B981]/30 flex justify-between items-center select-none font-mono text-[10px]">
-                <span className="text-[#10B981] font-bold uppercase tracking-widest">// POST::002 // RETRO_WIN95_SCHEDULE</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-[9px] font-bold">SYSTEM_STRESSED_ONLINE</span>
-                </div>
-              </div>
-
-              {/* REAL TIME SOCIAL CAPTION MODULE (IMAGE CAROUSEL DESIGN REMOVED) */}
-              <div className="p-5 md:p-6 select-text">
-                <h4 className="font-sans font-bold text-lg text-white mb-2 tracking-tight uppercase">
-                  📂 Retro Scheduler Desktop (마감 및 제출안내)
-                </h4>
-                <p className="font-sans text-xs text-faded-gray leading-relaxed text-justify mb-4">
-                  90년대 retro 운영체제 데스크톱 형식을 빌린 제출 타임라인 정보 카드 인포그래픽 리포트입니다. 
-                  작품 수락 CMD, 온라인/오프라인 제출 마감 마일스톤에 겹겹이 쌓이는 418 에라 창들이 기말을 맞이하는 
-                  기획단 동아리 인문예술전공생들의 뜨거운 현진 스토리를 그대로 반영합니다.
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-[#10B981]/10 select-none">
-                  <div className="flex gap-4 font-mono text-[10px] text-faded-gray/50">
-                    <span>DATE: 2026.05.18</span>
-                    <span>CATEGORY: TIMELINE_INFO</span>
-                  </div>
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={() => handleLike('post-retro-desktop')}
-                      className="flex items-center gap-1.5 text-rose-400 hover:text-rose-300 font-mono text-xs cursor-pointer select-none border border-rose-500/20 bg-rose-500/5 px-2.5 py-1"
-                    >
-                      <Heart className="w-3.5 h-3.5 fill-rose-500 stroke-rose-500" />
-                      <span>{likesCount['post-retro-desktop']}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+            {/* ROW 3: One Wide Post (첫 번째 줄과 동일한 가로 구조 구성) */}
+            <div className="w-full">
+              {renderInstagramPost({
+                id: '5',
+                title: '🫖 ERROR 418 I\'M A TEAPOT',
+                category: 'MAIN',
+                caption: '완벽하게 통제된 디지털 시스템, 오차 없이 굴러가는 일상\n매끄러운 알고리즘이 정해진 정답만을 요구하는 세상에서,\n가끔은 엉뚱한 ‘오류’가 위로가 될 때가 있습니다.\n\n커피를 내리라는 명령에 "나는 찻주전자이기에 커피를 내릴 수 없다"고\n응답한 유쾌한 서버의 농담처럼 우리는 정해진 시스템의 틈새에서,\n기술이 흉내 낼 수 없는 투박하고 따뜻한 인간의 흔적을 찾으려 합니다.\n\n커피를 요구하는 세상, 따뜻한 차 한 잔 어떠신가요? 🍵\n차가운 화면 너머, 우리의 고유한 서사가 담긴 빈틈투성이 공간으로 여러분을 초대합니다.',
+                date: '2026.05.27',
+                link: 'https://www.instagram.com/p/DX-ypXDSUZ7/'
+              }, true)}
             </div>
 
-            {/* ========================================== */}
-            {/* 4. BROKEN ELEMENT: BLUE SCREEN (BSOD) CARD  */}
-            {/* ========================================== */}
-            <div className="border-2 border-red-500 bg-[#0000aa] text-white p-5 md:p-6 font-mono text-xs box-solid-shadow select-all">
-              <div className="bg-white text-[#0000aa] px-2 py-0.5 text-[9px] font-bold select-none uppercase tracking-widest text-center mb-4">
-                *** SYSTEM CRASH REPORT ***
+            {/* SYSTEM INTERACTIVE PLAYGROUND (기존의 유틸리티 및 체험 기능 기계 구성) */}
+            <div className="border-t-2 border-dashed border-[#10B981]/20 pt-10 mt-6 w-full">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping" />
+                <span className="font-mono text-[#10B981] text-[10px] tracking-widest uppercase select-none font-bold">
+                  // SYSTEM_PLAYGROUND_AND_STATIONS
+                </span>
               </div>
               
-              <h4 className="font-bold text-[#FF3366] mb-3 text-sm select-none">A PROBLEM HAS BEEN DETECTED AND CORES HAVE OVERHEATED.</h4>
-              
-              <p className="text-justify leading-relaxed mb-4 text-[#80ff80]/90 font-bold select-text">
-                RFC 2324: There are insufficient automatic algorithms to compile &apos;emotions&apos; inside our production bundle.
-              </p>
-     
-              <p className="text-[10px] text-faded-gray/70 leading-normal mb-5 select-text">
-                * Check your mental boundaries.<br />
-                * Contact connect curators for support.<br />
-                * Error Location: 0x418_EMOTION_STACK_OVERFLOW
-              </p>
-     
-              <button 
-                onClick={() => {
-                  triggerBeep(300, 'square', 0.25);
-                  addTerminalLog("BSOD::Manual discharge triggered. core status reset.");
-                }}
-                className="w-full bg-[#c0c0c0] hover:bg-white text-black font-sans font-bold py-2.5 border-t-white border-l-white border-2 border-r-[#404040] border-b-[#404040] text-xs cursor-pointer select-none text-center"
-              >
-                DISCHARGE MEMORY OVERLOAD (RELOAD)
-              </button>
-            </div>
-
-            {/* ========================================== */}
-            {/* 5. INTERACTIVE DETAIL: YOUR MEMORY USER INPUT */}
-            {/* ========================================== */}
-            <div className="lg:col-span-3 border-2 border-dashed border-[#10B981]/80 hover:border-[#10B981] bg-[#05081E]/95 p-5 md:p-6 text-center box-solid-shadow relative flex flex-col justify-between min-h-[350px]">
-              <div className="absolute top-2 left-2 text-[8px] font-mono text-[#10B981]/50 uppercase select-none">
-                // SLOT_0X418_EMPTY_REDUNDANCY
-              </div>
-              
-              <div className="flex flex-col items-center justify-center my-auto py-4">
-                <div className="w-10 h-10 border border-[#10B981]/30 bg-[#10B981]/10 text-[#4261FF] rounded-none flex items-center justify-center mb-4 select-none animate-pulse">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-
-                <h4 className="font-mono text-soft-white font-black text-sm tracking-widest uppercase mb-2">
-                  your memory could be<br />uploaded here too
-                </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch w-full">
                 
-                <p className="font-sans text-xs text-faded-gray/70 leading-relaxed max-w-xs mx-auto mb-6">
-                  기계들 속에 당신의 파편을 남기지 않으시겠어요? 
-                  한 줄의 기억을 아래 타자기에 기록하면, 시스템의 코어 단에 즉시 업로드되어 보일링 로그에 등록됩니다.
-                </p>
-
-                <form onSubmit={handleAddMemory} className="w-full space-y-3">
-                  <input 
-                    type="text" 
-                    value={commentInput}
-                    onChange={(e) => setCommentInput(e.target.value)}
-                    placeholder="지저분한 사적인 파편 적기 (Write memory...)"
-                    maxLength={45}
-                    className="w-full bg-black border border-[#10B981]/40 text-xs px-3 py-2 text-white font-sans focus:outline-none focus:border-[#10B981] rounded-none text-center"
-                  />
-                  <div className="grid grid-cols-2 gap-2">
-                    <button 
-                      type="submit" 
-                      className="py-2.5 bg-[#10B981] hover:bg-[#FF3366] text-white font-mono text-[9px] font-bold tracking-widest transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1.5"
-                    >
-                      <Send className="w-2.5 h-2.5" /> 기억 업로드
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={() => {
-                        if (commentInput.trim()) {
-                          handlePrintReceipt(commentInput);
-                        } else {
-                          handlePrintReceipt("서툰 우리의 아름다운 오늘, CON:NECT 전시에서.");
-                        }
-                      }}
-                      className="py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-mono text-[9px] font-bold tracking-widest transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1.5"
-                    >
-                      <Printer className="w-2.5 h-2.5" /> 영수증 출력
-                    </button>
+                {/* 1. Interactive Memory Station */}
+                <div className="border-2 border-[#10B981] bg-[#05081E]/95 p-4 text-center box-solid-shadow relative flex flex-col justify-between min-h-[440px]">
+                  <div className="absolute top-2 left-2 text-[7px] font-mono text-[#10B981]/40 uppercase select-none">
+                    // SLOT_0X418_EMPTY_REDUNDANCY
                   </div>
-                </form>
-              </div>
+                  
+                  <div className="flex flex-col items-center justify-center my-auto py-2">
+                    <div className="w-10 h-10 border border-[#10B981]/30 bg-[#10B981]/10 text-[#4261FF] rounded-none flex items-center justify-center mb-3 select-none animate-pulse">
+                      <Sparkles className="w-5 h-5" />
+                    </div>
 
-              <div className="border-t border-[#10B981]/10 pt-3 flex flex-col gap-1 text-[9px] font-mono text-faded-gray/40 select-none">
-                <span>READY_FOR_HUMAN::SLOTS_OPEN_SANS</span>
-                <span>Awaiting manual override...</span>
+                    <h4 className="font-mono text-soft-white font-black text-xs tracking-widest uppercase mb-1">
+                      your memory could be<br />uploaded here too
+                    </h4>
+                    
+                    <p className="font-sans text-[11px] text-faded-gray/70 leading-relaxed max-w-xs mx-auto mb-4">
+                      기계들 속에 당신의 파편을 남기지 않으시겠어요? 한 줄의 기억을 기록하면 실시간 보일링 영수증으로 출력됩니다.
+                    </p>
+
+                    <form onSubmit={handleAddMemory} className="w-full space-y-2.5">
+                      <input 
+                        type="text" 
+                        value={commentInput}
+                        onChange={(e) => setCommentInput(e.target.value)}
+                        placeholder="지저분한 사적인 파편 적기 (Write memory...)"
+                        maxLength={45}
+                        className="w-full bg-black border border-[#10B981]/40 text-[11px] px-3 py-2 text-white font-sans focus:outline-none focus:border-[#10B981] rounded-none text-center"
+                      />
+                      <div className="grid grid-cols-2 gap-1.5">
+                        <button 
+                          type="submit" 
+                          className="py-2.5 bg-[#10B981] hover:bg-[#FF3366] text-white font-mono text-[9px] font-bold tracking-wider transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1 active:scale-95"
+                        >
+                          <Send className="w-2.5 h-2.5" /> 기억 업로드
+                        </button>
+                        <button 
+                          type="button"
+                          onClick={() => {
+                            if (commentInput.trim()) {
+                              handlePrintReceipt(commentInput);
+                            } else {
+                              handlePrintReceipt("서툰 우리의 아름다운 오늘, CON:NECT 전시에서.");
+                            }
+                          }}
+                          className="py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-mono text-[9px] font-bold tracking-wider transition-all cursor-pointer box-solid-shadow uppercase flex justify-center items-center gap-1 active:scale-95"
+                        >
+                          <Printer className="w-2.5 h-2.5" /> 영수증 출력
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div className="border-t border-[#10B981]/10 pt-3 flex flex-col gap-0.5 text-[8.5px] font-mono text-faded-gray/40 select-none">
+                    <span>READY_FOR_HUMAN::SLOTS_OPEN_SANS</span>
+                    <span>Awaiting manual override...</span>
+                  </div>
+                </div>
+
+                {/* 2. System Crash Overheat Indicator */}
+                <div className="border-2 border-red-500 bg-[#0000aa] text-white p-5 font-mono text-xs box-solid-shadow flex flex-col justify-between min-h-[440px] select-all">
+                  <div>
+                    <div className="bg-white text-[#0000aa] px-2 py-0.5 text-[9px] font-bold select-none uppercase tracking-widest text-center mb-4">
+                      *** SYSTEM CRASH REPORT ***
+                    </div>
+                    
+                    <h4 className="font-bold text-[#FF3366] mb-3 text-xs leading-tight select-none">A PROBLEM HAS BEEN DETECTED AND CORES HAVE OVERHEATED.</h4>
+                    
+                    <p className="text-justify text-[11px] leading-relaxed mb-4 text-[#80ff80]/90 font-bold select-text">
+                      RFC 2324: There are insufficient automatic algorithms to compile &apos;emotions&apos; inside our production bundle.
+                    </p>
+           
+                    <p className="text-[9.5px] text-faded-gray/70 leading-normal mb-5 select-text">
+                      * Check your mental boundaries.<br />
+                      * Contact connect curators for support.<br />
+                      * Error Location: 0x418_EMOTION_STACK_OVERFLOW
+                    </p>
+                  </div>
+         
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      triggerBeep(300, 'square', 0.25);
+                      addTerminalLog("BSOD::Manual discharge triggered. core status reset.");
+                    }}
+                    className="w-full bg-[#c0c0c0] hover:bg-white text-black font-sans font-bold py-2.5 border-t-white border-l-white border-2 border-r-[#404040] border-b-[#404040] text-xs cursor-pointer select-none text-center"
+                  >
+                    DISCHARGE MEMORY OVERLOAD (RELOAD)
+                  </button>
+                </div>
+
+                {/* 3. Upcoming Dialogues teaser */}
+                <div className="min-h-[440px]">
+                  <ComingSoonCard 
+                    title="기획진 인터뷰"
+                    subtitle="커넥트 다이얼로그 (Connect Dialogues) : 우리가 지새운 밤의 열정"
+                    statusText="SIGNAL UNSTABLE"
+                    estimatedRelease="D-3 RELEASE"
+                    leakText="기획팀장: '내일까지 안 끝나면 주전자에 들어가서 직접 끓겠습니다.' 진짜 끓고 있는 건 기획진의 정수리였습니다."
+                    onBeep={triggerBeep}
+                  />
+                </div>
+
+                {/* 4. Upcoming Subject Intro teaser */}
+                <div className="min-h-[440px]">
+                  <ComingSoonCard 
+                    title="참여 과목 소개 및 교수님 인터뷰"
+                    subtitle="기술과 인간의 만남 : 학문적 고뇌와 예술의 의미를 품다"
+                    statusText="PROCESSING_MEMORY"
+                    estimatedRelease="D-2 RELEASE"
+                    leakText="교수님: '저는 우리 학생들을 모두 진심으로 사랑합니다^^... 과제 마감기한만 정직하게 지켜준다면 그 사랑이 더 깊어질 뿐입니다.'"
+                    onBeep={triggerBeep}
+                  />
+                </div>
+
               </div>
             </div>
           </motion.div>
@@ -853,7 +953,7 @@ function ComingSoonCard({ title, subtitle, statusText, estimatedRelease, leakTex
     <div 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`border-2 border-dashed border-[#10B981]/30 bg-royal/5 p-5 md:p-6 relative overflow-hidden box-solid-shadow min-h-[310px] flex flex-col justify-between transition-colors duration-300 select-none ${
+      className={`border-2 border-dashed border-[#10B981]/30 bg-royal/5 p-5 md:p-6 relative overflow-hidden box-solid-shadow h-full min-h-[460px] flex flex-col justify-between transition-colors duration-300 select-none ${
         isLeaking ? 'bg-[#FF3366]/5 border-[#FF3366]/60' : 'hover:border-[#10B981]/60 hover:bg-royal/10'
       }`}
     >
