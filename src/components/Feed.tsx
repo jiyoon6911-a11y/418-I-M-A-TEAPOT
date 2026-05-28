@@ -418,10 +418,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="기획진 인터뷰"
               subtitle="기획단의 열정과 밤샘 기록"
-              statusText="SIGNAL UNSTABLE"
               estimatedRelease="D-3 RELEASE"
               leakText="'내일까지 안 끝나면 주전자에 직접 들어가겠습니다!' 기획진의 끓어오르는 열정 인터뷰."
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -430,10 +428,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="참여 과목 소개 및 교수님 인터뷰"
               subtitle="기술과 예술의 학문적 조화"
-              statusText="PROCESSING_MEMORY"
               estimatedRelease="D-2 RELEASE"
               leakText="교수님: '마감 기한만 정직하게 지켜준다면 학생들을 무기한 사랑하겠습니다.'"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -442,10 +438,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="포스터 공모전 대상 인터뷰"
               subtitle="대상을 사로잡은 단 하나의 에러 비주얼"
-              statusText="UPLOADING_IMPERFECTION"
               estimatedRelease="D-1 RELEASE"
               leakText="대망의 대상 단독 인터뷰! 과연 영예의 대상 주인공은 누구일까요?"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -454,10 +448,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 출품작 인터뷰"
               subtitle="작품 픽셀 너머에 심은 고유한 숨소리"
-              statusText="SIGNAL_CORRUPTED"
               estimatedRelease="EXHIBITION_DAY"
               leakText="작가: '작품명: [종강은 오는가]. 침대와 한몸이 된 처절한 데이터 시그널.'"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -466,10 +458,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 관람 안내(오시는 길/배치도 등)"
               subtitle="전시장 오시는 길 및 공간 배치도 안내"
-              statusText="MAPPING_COORDINATES"
               estimatedRelease="LOCATION_ACTIVE"
               leakText="CLC 건물 구석에서 다급하게 찻잔을 들고 서성이는 사람들을 발견했다면 도착!"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -478,10 +468,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="전시 관람 플레이리스트"
               subtitle="감성을 자극하는 완벽한 음악 트랙"
-              statusText="AUDIO_ENCRYPTED"
               estimatedRelease="STREAMING_DELAYED"
               leakText="트랙 1: 기획단 밤샘 비명소리 (Remix ver.), 트랙 2: 키보드 폭풍 타건 ASMR"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -490,10 +478,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="D-3/D-2/D-1 카운트다운"
               subtitle="하루마다 뜨겁게 달아오르는 디데이 기록"
-              statusText="CLOCK_LOCK_ENGAGED"
               estimatedRelease="T-MINUS COUNT"
               leakText="전시 오픈에 다가올수록 에라 모르겠다 과열 모드가 418%까지 도달 중!"
-              onBeep={triggerBeep}
             />
 
             {/* ========================================== */}
@@ -502,10 +488,8 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
             <ComingSoonCard 
               title="현장 스케치 및 전시 비하인드"
               subtitle="지저분하지만 눈부신 설치 현장 스냅"
-              statusText="CLIPPING_TRACES"
               estimatedRelease="LIVE_BUFFERING"
               leakText="작품 뒤에 쓸쓸하게 뒹구는 빈 커피 캔과 눅눅한 야식 봉지가 진짜 비하인드."
-              onBeep={triggerBeep}
             />
           </motion.div>
         )}
@@ -517,120 +501,53 @@ export default function Feed({ humanTouchMode }: { humanTouchMode: boolean }) {
   );
 }
 
-// Subordinate Component to prevent re-renders on hover glitches and manage localized state for coming soon leaks
+// Subordinate Component to display coming soon sections neatly
 interface ComingSoonCardProps {
   title: string;
   subtitle: string;
-  statusText: string;
   estimatedRelease: string;
   leakText: string;
-  onBeep: (freq: number) => void;
 }
 
-function ComingSoonCard({ title, subtitle, statusText, estimatedRelease, leakText, onBeep }: ComingSoonCardProps) {
-  const [isLeaking, setIsLeaking] = useState(false);
-  const [leakTriggeredOnce, setLeakTriggeredOnce] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout|null>(null);
-
-  const handleMouseEnter = () => {
-    onBeep(493.88); // B4 alert beep
-
-    setIsLeaking(true);
-    setLeakTriggeredOnce(true);
-
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setIsLeaking(false);
-    }, 2200); // 2.2s reveal duration for emotional leak
-  };
-
-  const handleMouseLeave = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setIsLeaking(false);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
-
+function ComingSoonCard({ title, subtitle, estimatedRelease, leakText }: ComingSoonCardProps) {
   return (
     <div 
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`border-2 border-dashed border-[#10B981]/30 bg-royal/5 p-4 md:p-5 relative overflow-hidden box-solid-shadow h-full min-h-[350px] flex flex-col justify-between transition-colors duration-300 select-none ${
-        isLeaking ? 'bg-[#FF3366]/5 border-[#FF3366]/60' : 'hover:border-[#10B981]/60 hover:bg-royal/10'
-      }`}
+      className="border-2 border-dashed border-[#10B981]/25 bg-royal/5 p-5 relative overflow-hidden box-solid-shadow flex flex-col justify-between transition-all duration-300 select-none hover:border-[#10B981]/50 hover:bg-royal/10 group min-h-[170px]"
     >
       {/* Top Header Metadata */}
-      <div className="flex justify-between items-center text-[9px] font-mono select-none">
-        <span className="text-[#10B981] font-bold uppercase tracking-wider">// COMING_SOON_LOCK</span>
-        <span className="text-amber-400 font-bold bg-[#10B981]/10 px-1.5 py-0.5 border border-[#10B981]/20">{estimatedRelease}</span>
+      <div className="flex justify-between items-center text-[9px] font-mono select-none mb-3">
+        <span className="text-[#10B981]/70 font-bold uppercase tracking-wider">// COMING_SOON</span>
+        <span className="text-amber-400 font-bold bg-[#10B981]/10 px-2 py-0.5 border border-[#10B981]/20">{estimatedRelease}</span>
       </div>
 
       {/* Main Content Area */}
-      <div className="my-auto py-2 relative min-h-[100px] flex flex-col justify-center">
-        {/* Title and Subtitle - CRISP AND FULLY READABLE TO BUILD ANTICIPATION */}
-        <div className="text-left mb-4 select-text">
-          <h4 className="font-sans text-sm md:text-base font-extrabold text-soft-white mb-1.5 leading-snug tracking-tight">
+      <div className="flex-1 flex flex-col justify-between gap-4">
+        {/* Title and Subtitle */}
+        <div className="text-left select-text">
+          <h4 className="font-sans text-sm md:text-base font-extrabold text-soft-white mb-1.5 leading-snug tracking-tight group-hover:text-[#10B981] transition-colors duration-200">
             {title}
           </h4>
           {subtitle && (
-            <p className="font-sans text-[10px] text-faded-gray/90 leading-normal font-semibold">
+            <p className="font-sans text-[11px] text-faded-gray/90 leading-normal font-medium">
               {subtitle}
             </p>
           )}
         </div>
 
-        {/* Encrypted / Leaked stream block */}
-        <div className="relative border border-[#10B981]/20 bg-black/40 p-3 h-20 overflow-hidden flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            {isLeaking ? (
-              <motion.div 
-                key="leak-visual"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                className="w-full text-center flex flex-col items-center justify-center select-text"
-              >
-                <div className="text-[7.5px] text-[#FF3366] font-mono uppercase tracking-wider font-bold animate-pulse mb-1">
-                   ⚡ EMOTIONAL SIGNAL LEAKED! / 감정 시그널 누출됨
-                </div>
-                <p className="font-sans text-[11px] md:text-xs text-yellow-300 tracking-tight leading-snug font-bold select-text px-1 text-center">
-                  &ldquo;{leakText}&rdquo;
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="normal-visual"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="w-full h-full flex flex-col items-center justify-center text-center relative"
-              >
-                {/* Blurry decorative background symbolizing lock state */}
-                <div className="filter blur-[4.5px] opacity-15 select-none text-[8px] font-mono leading-none w-full break-all whitespace-nowrap absolute">
-                  0x418_AES_ENCRYPTED_SIGNAL_STREAM_75032035544_PRO_EMOTIONAL_LEAK_WARNING_REFLUX_NOT_READY_UPLOADING_COMING_SOON_INTERVIEW_SKETCH
-                </div>
-
-                {/* Highly aesthetic interactive status tag */}
-                <div className="z-10 flex flex-col items-center bg-[#020516]/90 border border-amber-500/20 px-3 py-1 font-mono tracking-widest text-center select-none uppercase box-solid-shadow">
-                  <span className="text-[8.5px] font-black text-amber-400">{statusText}</span>
-                  <span className="text-[7px] text-[#4261FF] font-semibold mt-0.5 underline">
-                    마우스를 올려 보일링 로그 탐색 (Hover)
-                  </span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* Flat readable teaser quote */}
+        {leakText && (
+          <div className="border-l-2 border-[#10B981]/40 pl-3 py-1 bg-black/20 text-left select-text">
+            <p className="font-sans text-[11px] text-emerald-300 italic leading-relaxed">
+              &ldquo;{leakText}&rdquo;
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Bottom info section */}
-      <div className="border-t border-[#10B981]/10 pt-3.5 flex justify-between items-center text-[9px] font-mono text-faded-gray/40 select-none">
+      <div className="border-t border-[#10B981]/10 mt-4 pt-3 flex justify-between items-center text-[9px] font-mono text-faded-gray/30 select-none">
         <span>SECURITY_KEY: 0x418_AES_256</span>
-        <span>LEAK_DETECTED: {leakTriggeredOnce ? "TRUE" : "FALSE"}</span>
+        <span className="text-faded-gray/40">READY_FOR_COMMUNITY</span>
       </div>
     </div>
   );
